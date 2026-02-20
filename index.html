@@ -19,17 +19,184 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <!-- <section>Slide 1</section>
-        <section data-visibility="hidden">Slide X</section>
-        <section>Slide 2</section> -->
-        <section
-          data-markdown="notes.md"
-		  data-separator-vertical="^\r?\n>>>\r?\n$"
-        >
-          <!--
-        Note that Windows uses `\r\n` instead of `\n` as its linefeed character.
-        For a regex that supports all operating systems, use `\r?\n` instead of `\n`.
-    -->
+        <section>
+          <h1>Python Tuples</h1>
+          <h3>Immutable Ordered Collections</h3>
+        </section>
+
+        <section>
+          <h2>What is a Tuple?</h2>
+          <ul>
+            <li>An ordered collection</li>
+            <li>Immutable (cannot be changed after creation)</li>
+            <li>Allows duplicate values</li>
+            <li>Can store mixed data types</li>
+          </ul>
+          <pre><code class="language-python">my_tuple = (1, 2, 3)</code></pre>
+        </section>
+
+        <section>
+          <h2>Creating Tuples</h2>
+          <h4>Basic Syntax</h4>
+          <pre><code class="language-python">numbers = (10, 20, 30)</code></pre>
+          <h4>Tuple Packing</h4>
+          <pre><code class="language-python">numbers = 10, 20, 30</code></pre>
+          <h4>Single-Element Tuple</h4>
+          <pre><code class="language-python">single = (5,)   # Comma is required!</code></pre>
+        </section>
+
+        <section>
+          <h2>Tuple vs List</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Tuple</th>
+                <th>List</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mutable</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Syntax</td>
+                <td>( )</td>
+                <td>[ ]</td>
+              </tr>
+              <tr>
+                <td>Performance</td>
+                <td>Faster</td>
+                <td>Slightly slower</td>
+              </tr>
+              <tr>
+                <td>Use Case</td>
+                <td>Fixed data</td>
+                <td>Changing data</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section>
+          <h2>Accessing Tuple Elements</h2>
+          <pre><code class="language-python">colors = ("red", "green", "blue")
+
+print(colors[0])  # red
+print(colors[-1]) # blue</code></pre>
+          <p>Indexing starts at <strong>0</strong>.</p>
+        </section>
+
+        <section>
+          <h2>Tuple Slicing</h2>
+          <pre><code class="language-python">numbers = (10, 20, 30, 40, 50)
+
+print(numbers[1:4])  # (20, 30, 40)</code></pre>
+          <pre><code class="language-python">tuple[start:end]</code></pre>
+        </section>
+
+        <section>
+          <h2>Immutability Explained</h2>
+          <pre><code class="language-python">numbers = (1, 2, 3)
+numbers[0] = 10  # TypeError</code></pre>
+          <ul>
+            <li>Safer for constant data</li>
+            <li>Memory efficient</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Why Use Tuples?</h2>
+          <ul>
+            <li>Data should not change</li>
+            <li>Returning multiple values from functions</li>
+            <li>Using data as dictionary keys</li>
+            <li>Storing fixed configuration</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Tuple Packing &amp; Unpacking</h2>
+          <h4>Packing</h4>
+          <pre><code class="language-python">person = ("Alice", 25, "Engineer")</code></pre>
+          <h4>Unpacking</h4>
+          <pre><code class="language-python">name, age, job = person</code></pre>
+        </section>
+
+        <section>
+          <h2>Extended Unpacking</h2>
+          <pre><code class="language-python">numbers = (1, 2, 3, 4, 5)
+
+first, *middle, last = numbers</code></pre>
+          <ul>
+            <li>first = 1</li>
+            <li>middle = [2, 3, 4]</li>
+            <li>last = 5</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Tuple Methods</h2>
+          <p>Tuples have only two built-in methods:</p>
+          <pre><code class="language-python">numbers = (1, 2, 2, 3)
+
+numbers.count(2)   # 2
+numbers.index(3)   # 3</code></pre>
+        </section>
+
+        <section>
+          <h2>Nested Tuples</h2>
+          <pre><code class="language-python">matrix = (
+    (1, 2),
+    (3, 4)
+)
+
+print(matrix[0][1])  # 2</code></pre>
+          <p>Useful for structured data.</p>
+        </section>
+
+        <section>
+          <h2>Converting Between List and Tuple</h2>
+          <h4>Tuple → List</h4>
+          <pre><code class="language-python">numbers = (1, 2, 3)
+numbers_list = list(numbers)</code></pre>
+          <h4>List → Tuple</h4>
+          <pre><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
+        </section>
+
+        <section>
+          <h2>Tuples as Dictionary Keys</h2>
+          <pre><code class="language-python">locations = {
+    (40.7128, -74.0060): "New York",
+    (34.0522, -118.2437): "Los Angeles"
+}</code></pre>
+          <p>Lists cannot be used as keys.</p>
+        </section>
+
+        <section>
+          <h2>Performance Benefits</h2>
+          <ul>
+            <li>Use less memory</li>
+            <li>Are faster to iterate</li>
+            <li>Provide data integrity</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>When in doubt</h2>
+          <p>Use a <strong>tuple</strong> for fixed data.</p>
+          <p>Use a <strong>list</strong> for changing data.</p>
+        </section>
+
+        <section>
+          <h2>Class Activity</h2>
+          <ol>
+            <li>Create a tuple with 5 values.</li>
+            <li>Unpack it into variables.</li>
+            <li>Slice the middle 3 elements.</li>
+          </ol>
         </section>
       </div>
     </div>
