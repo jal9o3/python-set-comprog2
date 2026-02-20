@@ -226,3 +226,11 @@ Tuples:
 
 Use a **tuple** for fixed data.
 Use a **list** for changing data.
+
+---
+
+## Class Activity
+1. Create a tuple with 5 values.
+2. Unpack it into variables.
+3. Slice the middle 3 elements.
+
