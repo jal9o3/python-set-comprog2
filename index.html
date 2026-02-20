@@ -11,7 +11,7 @@
 
     <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/reveal.css" />
-    <link rel="stylesheet" href="dist/theme/beige.css" />
+    <link rel="stylesheet" href="dist/theme/serif.css" />
 
     <!-- Theme used for syntax highlighted code -->
     <link rel="stylesheet" href="plugin/highlight/monokai.css" />
@@ -20,6 +20,7 @@
     <div class="reveal">
       <div class="slides">
         <section>
+          <h3>Lesson IV</h3>
           <h1>Python Tuples</h1>
           <h3>Immutable Ordered Collections</h3>
         </section>
@@ -32,17 +33,192 @@
             <li>Allows duplicate values</li>
             <li>Can store mixed data types</li>
           </ul>
+        </section>
+
+        <section>
+          <p>It looks like this:</p>
           <pre><code class="language-python">my_tuple = (1, 2, 3)</code></pre>
         </section>
 
         <section>
-          <h2>Creating Tuples</h2>
-          <h4>Basic Syntax</h4>
-          <pre><code class="language-python">numbers = (10, 20, 30)</code></pre>
-          <h4>Tuple Packing</h4>
-          <pre><code class="language-python">numbers = 10, 20, 30</code></pre>
-          <h4>Single-Element Tuple</h4>
-          <pre><code class="language-python">single = (5,)   # Comma is required!</code></pre>
+          <section>
+            <h2>Creating Tuples</h2>
+            <h4>Basic Syntax</h4>
+            <pre><code class="language-python">numbers = (10, 20, 30)</code></pre>
+            <h4>Tuple Packing</h4>
+            <pre><code class="language-python">numbers = 10, 20, 30</code></pre>
+            <h4>Single-Element Tuple</h4>
+            <pre><code class="language-python">single = (5,)   # Comma is required!</code></pre>
+          </section>
+
+          <section>
+            <h2>Parentheses Are Not What Make a Tuple</h2>
+            <p>
+              <strong>The comma</strong>, not the parentheses, creates a tuple.
+            </p>
+            <pre><code class="language-python">
+a = (1, 2, 3)
+b = 1, 2, 3
+
+print(type(a))  # tuple
+print(type(b))  # tuple
+  </code></pre>
+          </section>
+
+          <section>
+            <h2>Parentheses for Clarity</h2>
+            <p>
+              Even though parentheses are optional, they are recommended for:
+            </p>
+            <ul>
+              <li>Readability</li>
+              <li>Preventing ambiguity</li>
+              <li>Multi-line formatting</li>
+            </ul>
+            <pre><code class="language-python">
+coordinates = (
+    40.7128,
+    -74.0060
+)
+  </code></pre>
+          </section>
+
+          <section>
+            <h2>The Single-Element Tuple Rule</h2>
+            <p>Common mistake:</p>
+            <pre><code class="language-python">
+single = (5)
+print(type(single))  # int
+  </code></pre>
+
+            <p>Correct:</p>
+            <pre><code class="language-python">
+single = (5,)
+print(type(single))  # tuple
+  </code></pre>
+          </section>
+
+          <section>
+            <h2>Why the Comma Matters</h2>
+            <pre><code class="language-python">
+x = 5,
+print(x)        # (5,)
+print(type(x))  # tuple
+  </code></pre>
+            <p>Parentheses group expressions. The comma creates the tuple.</p>
+          </section>
+
+          <section>
+            <h2>Empty Tuples</h2>
+            <pre><code class="language-python">
+empty = ()
+  </code></pre>
+            <p>Invalid syntax:</p>
+            <pre><code class="language-python">
+empty = ,   # SyntaxError
+  </code></pre>
+          </section>
+
+          <section>
+            <h2>Multi-Line Tuple Creation</h2>
+            <pre><code class="language-python">
+config = (
+    "localhost",
+    5432,
+    True,
+    30.5
+)
+  </code></pre>
+            <p>Common in configuration and structured constants.</p>
+          </section>
+
+          <section>
+            <h2>Tuple Creation from Iterables</h2>
+            <pre><code class="language-python">
+numbers = tuple([1, 2, 3])
+letters = tuple("abc")
+
+print(numbers)  # (1, 2, 3)
+print(letters)  # ('a', 'b', 'c')
+  </code></pre>
+          </section>
+
+          <section>
+            <h2>Trailing Commas</h2>
+            <pre><code class="language-python">
+values = (1, 2, 3,)
+  </code></pre>
+            <ul>
+              <li>Cleaner diffs in version control</li>
+              <li>Easier element additions</li>
+              <li>Valid and recommended in long tuples</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Nested Tuple Creation</h2>
+            <pre><code class="language-python">
+data = (
+    ("Alice", 25),
+    ("Bob", 30),
+    ("Charlie", 35)
+)
+  </code></pre>
+            <p>Useful for structured immutable records.</p>
+          </section>
+
+          <section>
+            <h2>Tuple Packing in Function Returns</h2>
+            <pre><code class="language-python">
+def get_user():
+    return "Alice", 25
+
+result = get_user()
+print(result)  # ('Alice', 25)
+  </code></pre>
+            <p>Python automatically packs return values into a tuple.</p>
+          </section>
+
+          <section>
+            <h2>Tuple Creation with Generators</h2>
+            <pre><code class="language-python">
+squares = tuple(x**2 for x in range(5))
+print(squares)  # (0, 1, 4, 9, 16)
+  </code></pre>
+            <p>The generator expression is consumed by <code>tuple()</code>.</p>
+          </section>
+
+          <section>
+            <h2>Common Mistakes</h2>
+            <ul>
+              <li>Forgetting comma in single-element tuple</li>
+              <li>Assuming parentheses create tuples</li>
+              <li>Trying to modify tuple elements</li>
+              <li>
+                Confusing lists <code>[]</code> with tuples <code>()</code>
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Best Practices</h2>
+            <ul>
+              <li>Use parentheses for clarity</li>
+              <li>Always include comma for single-element tuples</li>
+              <li>Use <code>tuple()</code> for conversions</li>
+              <li>Use tuples for fixed, constant data</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Class Practice</h2>
+            <ol>
+              <li>Create a single-element tuple correctly.</li>
+              <li>Create a tuple without parentheses.</li>
+              <li>Convert a string into a tuple of characters.</li>
+              <li>Create a multi-line configuration tuple.</li>
+            </ol>
+          </section>
         </section>
 
         <section>
@@ -185,13 +361,13 @@ numbers_list = list(numbers)</code></pre>
         </section>
 
         <section>
-          <h2>When in doubt</h2>
+          <h2>When in Doubt:</h2>
           <p>Use a <strong>tuple</strong> for fixed data.</p>
           <p>Use a <strong>list</strong> for changing data.</p>
         </section>
 
         <section>
-          <h2>Class Activity</h2>
+          <h2>Class Practice</h2>
           <ol>
             <li>Create a tuple with 5 values.</li>
             <li>Unpack it into variables.</li>
