@@ -142,7 +142,9 @@
         font-family: monospace;
         font-size: 1rem;
         font-weight: 600;
-        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        transition:
+          transform 0.12s ease,
+          box-shadow 0.12s ease;
       }
 
       .token:hover {
@@ -240,19 +242,32 @@
 
         <section>
           <br />
-          <h2 class="text-center">Tuple Builder Challenge</h2>
+          <h3 class="text-center">Arrange these to create a tuple:</h3>
           <div class="tuple-game" id="tuple-game">
             <div class="game-progress">
               <span id="tuple-round">Round 1 / 3</span>
               <span id="tuple-score">Score: 0</span>
             </div>
 
-            <div id="tuple-bank" class="token-bank" aria-label="Available tokens"></div>
-            <div id="tuple-answer" class="answer-row empty" aria-label="Answer tokens"></div>
+            <div
+              id="tuple-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="tuple-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
 
             <div class="game-controls">
-              <button id="tuple-check" class="game-btn primary" type="button">Check</button>
-              <button id="tuple-clear" class="game-btn secondary" type="button">Clear</button>
+              <button id="tuple-check" class="game-btn primary" type="button">
+                Check
+              </button>
+              <button id="tuple-clear" class="game-btn secondary" type="button">
+                Clear
+              </button>
             </div>
 
             <p id="tuple-feedback" class="game-feedback" aria-live="polite"></p>
@@ -706,7 +721,7 @@ numbers_list = list(numbers)</code></pre>
         },
         {
           target: ["user", "=", '("Ana",', "25)"],
-          tokens: ["user", "=", '("Ana",', "25)", "[\"Ana\",", "25]", "=>"],
+          tokens: ["user", "=", '("Ana",', "25)", '["Ana",', "25]", "=>"],
         },
       ];
 
@@ -783,7 +798,7 @@ numbers_list = list(numbers)</code></pre>
         selectedIndexes = [];
         bank.innerHTML = "";
         answer.innerHTML = "";
-        setFeedback("Build the line by tapping tokens.");
+        setFeedback("Complete the code by tapping tokens.");
 
         round.tokens.forEach((text, index) => {
           const token = makeTokenButton(text, index);
@@ -807,14 +822,21 @@ numbers_list = list(numbers)</code></pre>
           return;
         }
 
-        setFeedback(`Challenge complete! Final score: ${score}/${tupleRounds.length}`, "success");
+        setFeedback(
+          `Challenge complete! Final score: ${score}/${tupleRounds.length}`,
+          "success",
+        );
         checkBtn.disabled = true;
       };
 
       checkBtn.addEventListener("click", () => {
         const round = tupleRounds[currentRoundIndex];
-        const answerTokens = selectedIndexes.map((index) => round.tokens[index]);
-        const correct = answerTokens.length === round.target.length && answerTokens.every((token, index) => token === round.target[index]);
+        const answerTokens = selectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
 
         if (correct) {
           score += 1;
@@ -824,7 +846,10 @@ numbers_list = list(numbers)</code></pre>
           return;
         }
 
-        setFeedback("Not quite. Check commas and parentheses, then try again.", "error");
+        setFeedback(
+          "Not quite. Check commas and parentheses, then try again.",
+          "error",
+        );
       });
 
       clearBtn.addEventListener("click", () => {
