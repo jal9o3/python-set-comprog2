@@ -712,16 +712,16 @@ numbers_list = list(numbers)</code></pre>
     <script>
       const tupleRounds = [
         {
-          target: ["coordinates", "=", "(10,", "20)"],
-          tokens: ["coordinates", "=", "(10,", "20)", "[10,", "20]", "=="],
+          target: ["target_coordinates", "=", "(10,", "20)"],
+          tokens: ["target_coordinates", "=", "(10,", "20)", "[10,", "20]", "=="],
         },
         {
-          target: ["single", "=", "(5,)"],
-          tokens: ["single", "=", "(5,)", "(5)", "5", "=="],
+          target: ["school_days", "=", "(\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\")"],
+          tokens: ["school_days", "=", "(\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\")", "[\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\"]", "=="],
         },
         {
-          target: ["user", "=", '("Ana",', "25)"],
-          tokens: ["user", "=", '("Ana",', "25)", '["Ana",', "25]", "=>"],
+          target: ["crime_scene_coords", "=", '(14.5995,', "120.9842)"],
+          tokens: ["crime_scene_coords", "=", '(14.5995,', "120.9842)", "[14.5995,", "120.9842]", "=="],
         },
       ];
 
