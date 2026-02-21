@@ -242,7 +242,8 @@
 
         <section>
           <br />
-          <h3 class="text-center">Arrange these to create a tuple:</h3>
+          <h3 class="text-center">Translate this to Python using a tuple:</h3>
+          <p class="english-sentence"></p>
           <div class="tuple-game" id="tuple-game">
             <div class="game-progress">
               <span id="tuple-round">Round 1 of 3</span>
@@ -712,14 +713,17 @@ numbers_list = list(numbers)</code></pre>
     <script>
       const tupleRounds = [
         {
+          prompt: "Target coordinates are 10 and 20.",
           target: ["target_coordinates", "=", "(10,", "20)"],
           tokens: ["target_coordinates", "=", "(10,", "20)", "[10,", "20]", "=="],
         },
         {
+          prompt: "School days are Monday, Tuesday, Wednesday, Thursday, and Friday.",
           target: ["school_days", "=", "(\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\")"],
           tokens: ["school_days", "=", "(\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\")", "[\"Mon\",", "\"Tue\",", "\"Wed\",", "\"Thu\",", "\"Fri\"]", "=="],
         },
         {
+          prompt: "Crime scene coordinates are 14.5995 and 120.9842.",
           target: ["crime_scene_coords", "=", '(14.5995,', "120.9842)"],
           tokens: ["crime_scene_coords", "=", '(14.5995,', "120.9842)", "[14.5995,", "120.9842]", "=="],
         },
@@ -727,6 +731,7 @@ numbers_list = list(numbers)</code></pre>
 
       const bank = document.getElementById("tuple-bank");
       const answer = document.getElementById("tuple-answer");
+      const englishSentence = document.querySelector(".english-sentence");
       const roundText = document.getElementById("tuple-round");
       const scoreText = document.getElementById("tuple-score");
       const feedback = document.getElementById("tuple-feedback");
@@ -810,6 +815,9 @@ numbers_list = list(numbers)</code></pre>
         selectedIndexes = [];
         bank.innerHTML = "";
         answer.innerHTML = "";
+        if (englishSentence) {
+          englishSentence.textContent = round.prompt;
+        }
         setFeedback("");
 
         const shuffledIndexes = getShuffledIndexes(round.tokens.length);
