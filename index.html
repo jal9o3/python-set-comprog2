@@ -245,7 +245,7 @@
           <h3 class="text-center">Arrange these to create a tuple:</h3>
           <div class="tuple-game" id="tuple-game">
             <div class="game-progress">
-              <span id="tuple-round">Round 1 / 3</span>
+              <span id="tuple-round">Round 1 of 3</span>
               <span id="tuple-score">Score: 0</span>
             </div>
 
@@ -747,7 +747,7 @@ numbers_list = list(numbers)</code></pre>
       };
 
       const updateHeader = () => {
-        roundText.textContent = `Round ${currentRoundIndex + 1} / ${tupleRounds.length}`;
+        roundText.textContent = `Round ${currentRoundIndex + 1} of ${tupleRounds.length}`;
         scoreText.textContent = `Score: ${score}`;
       };
 
@@ -798,7 +798,7 @@ numbers_list = list(numbers)</code></pre>
         selectedIndexes = [];
         bank.innerHTML = "";
         answer.innerHTML = "";
-        setFeedback("Complete the code by tapping tokens.");
+        setFeedback("");
 
         round.tokens.forEach((text, index) => {
           const token = makeTokenButton(text, index);
@@ -847,7 +847,7 @@ numbers_list = list(numbers)</code></pre>
         }
 
         setFeedback(
-          "Not quite. Check commas and parentheses, then try again.",
+          "Not quite. Recheck, then try again.",
           "error",
         );
       });
