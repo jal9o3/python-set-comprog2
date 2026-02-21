@@ -83,72 +83,90 @@
       <div class="slides">
         <section>
           <div class="text-center">
-            <br>
+            <br />
             <h3>Lesson IV</h3>
             <h1>Python Tuples</h1>
             <h3>Immutable Ordered Collections</h3>
-            <br>
+            <br />
             <p>Jerome Loria</p>
             <p>February 2026</p>
           </div>
         </section>
 
         <section>
-          <br>
+          <br />
           <h2 class="text-center">What is a Tuple?</h2>
-          <br>
+          <br />
           <ul>
             <li>An ordered collection</li>
-            <li>Immutable (cannot be changed after creation)</li>
             <li>Allows duplicate values</li>
             <li>Can store mixed data types</li>
+            <li>Immutable (cannot be changed after creation)</li>
           </ul>
         </section>
 
         <section>
-          <br>
+          <br /><br /><br />
           <p class="text-center">Tuples look like this:</p>
-          <pre><code class="language-python">my_tuple = (1, 2, 3)</code></pre>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">my_tuple = (1, 2, 3)</code></pre>
           <img
-            style="margin-left: auto; display: block; width: 200px;"
+            style="margin-left: auto; display: block; width: 200px"
             src="public/tupperware.png"
             alt="Tupperware"
           />
         </section>
 
         <section>
-          <h2>Creating Tuples</h2>
-          <h4>Basic Syntax</h4>
-          <pre><code class="language-python">numbers = (10, 20, 30)</code></pre>
-          <h4>Tuple Packing</h4>
-          <pre><code class="language-python">numbers = 10, 20, 30</code></pre>
-          <h4>Single-Element Tuple</h4>
-          <pre><code class="language-python">single = (5,)   # Comma is required!</code></pre>
+          <br />
+          <h2 class="text-center">Creating Tuples</h2>
+          <h4 class="text-center">Basic Syntax</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (10, 20, 30)</code></pre>
+          <br />
+          <h4 class="text-center">Tuple Packing</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = 10, 20, 30</code></pre>
+          <br />
+          <h4 class="text-center">Single-Element Tuple</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">single = (5,)   # Comma is required!</code></pre>
         </section>
 
         <section>
-          <h2>Parentheses Are Not What Make a Tuple</h2>
-          <p>
-            <strong>The comma</strong>, not the parentheses, creates a tuple.
-          </p>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Tuple != Parentheses</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 a = (1, 2, 3)
 b = 1, 2, 3
 
 print(type(a))  # tuple
 print(type(b))  # tuple
   </code></pre>
+          <br />
+          <p class="text-center">
+            <strong>The comma</strong>, not the parentheses, creates a tuple.
+          </p>
         </section>
 
         <section>
-          <h2>Parentheses for Clarity</h2>
-          <p>Even though parentheses are optional, they are recommended for:</p>
+          <br />
+          <h2 class="text-center">Parentheses for Clarity</h2>
+          <p class="text-center">
+            Parentheses are optional, but they are recommended for:
+          </p>
           <ul>
             <li>Readability</li>
             <li>Preventing ambiguity</li>
             <li>Multi-line formatting</li>
           </ul>
-          <pre><code class="language-python">
+          <br /><br />
+          <pre style="margin: auto"><code class="language-python">
 coordinates = (
     40.7128,
     -74.0060
@@ -157,44 +175,56 @@ coordinates = (
         </section>
 
         <section>
-          <h2>The Single-Element Tuple Rule</h2>
-          <p>Common mistake:</p>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Single-Element Tuple Rule</h2>
+          <p class="text-center">Common mistake:</p>
+          <pre style="margin: auto"><code class="language-python">
 single = (5)
 print(type(single))  # int
   </code></pre>
 
-          <p>Correct:</p>
-          <pre><code class="language-python">
+          <p class="text-center">Correct:</p>
+          <pre style="margin: auto"><code class="language-python">
 single = (5,)
 print(type(single))  # tuple
   </code></pre>
         </section>
 
         <section>
-          <h2>Why the Comma Matters</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Why the Comma Matters</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 x = 5,
 print(x)        # (5,)
 print(type(x))  # tuple
   </code></pre>
-          <p>Parentheses group expressions. The comma creates the tuple.</p>
+          <br />
+          <p class="text-center">
+            Parentheses group expressions. The comma creates the tuple.
+          </p>
         </section>
 
         <section>
-          <h2>Empty Tuples</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Empty Tuples</h2>
+          <p class="text-center">Correct syntax:</p>
+
+          <pre style="margin: auto"><code class="language-python">
 empty = ()
   </code></pre>
-          <p>Invalid syntax:</p>
-          <pre><code class="language-python">
+          <br />
+          <p class="text-center">Invalid syntax:</p>
+          <pre style="margin: auto"><code class="language-python">
 empty = ,   # SyntaxError
   </code></pre>
         </section>
 
         <section>
-          <h2>Multi-Line Tuple Creation</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Multi-Line Tuple Creation</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 config = (
     "localhost",
     5432,
@@ -202,12 +232,13 @@ config = (
     30.5
 )
   </code></pre>
-          <p>Common in configuration and structured constants.</p>
         </section>
 
         <section>
-          <h2>Tuple Creation from Iterables</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Tuple Creation from Iterables</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 numbers = tuple([1, 2, 3])
 letters = tuple("abc")
 
@@ -217,165 +248,122 @@ print(letters)  # ('a', 'b', 'c')
         </section>
 
         <section>
-          <h2>Trailing Commas</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Trailing Commas</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 values = (1, 2, 3,)
   </code></pre>
+          <br />
           <ul>
-            <li>Cleaner diffs in version control</li>
             <li>Easier element additions</li>
             <li>Valid and recommended in long tuples</li>
           </ul>
         </section>
 
         <section>
-          <h2>Nested Tuple Creation</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Nested Tuple Creation</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 data = (
     ("Alice", 25),
     ("Bob", 30),
     ("Charlie", 35)
 )
   </code></pre>
-          <p>Useful for structured immutable records.</p>
+          <br />
+          <p class="text-center">Useful for structured immutable records.</p>
         </section>
 
         <section>
-          <h2>Tuple Packing in Function Returns</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Packing & Returns</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 def get_user():
     return "Alice", 25
 
 result = get_user()
 print(result)  # ('Alice', 25)
   </code></pre>
-          <p>Python automatically packs return values into a tuple.</p>
+          <br />
+          <p class="text-center">
+            Python automatically packs return values into a tuple.
+          </p>
         </section>
 
         <section>
-          <h2>Tuple Creation with Generators</h2>
-          <pre><code class="language-python">
+          <br />
+          <h2 class="text-center">Tuple Creation with Generators</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">
 squares = tuple(x**2 for x in range(5))
 print(squares)  # (0, 1, 4, 9, 16)
   </code></pre>
-          <p>The generator expression is consumed by <code>tuple()</code>.</p>
+          <br />
+          <p class="text-center">
+            The generator expression is consumed by <code>tuple()</code>.
+          </p>
         </section>
 
         <section>
-          <h2>Common Mistakes</h2>
-          <ul>
-            <li>Forgetting comma in single-element tuple</li>
-            <li>Assuming parentheses create tuples</li>
-            <li>Trying to modify tuple elements</li>
-            <li>Confusing lists <code>[]</code> with tuples <code>()</code></li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Best Practices</h2>
-          <ul>
-            <li>Use parentheses for clarity</li>
-            <li>Always include comma for single-element tuples</li>
-            <li>Use <code>tuple()</code> for conversions</li>
-            <li>Use tuples for fixed, constant data</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Class Practice</h2>
-          <ol>
-            <li>Create a single-element tuple correctly.</li>
-            <li>Create a tuple without parentheses.</li>
-            <li>Convert a string into a tuple of characters.</li>
-            <li>Create a multi-line configuration tuple.</li>
-          </ol>
-        </section>
-
-        <section>
-          <h2>Tuple vs List</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Tuple</th>
-                <th>List</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Mutable</td>
-                <td>No</td>
-                <td>Yes</td>
-              </tr>
-              <tr>
-                <td>Syntax</td>
-                <td>( )</td>
-                <td>[ ]</td>
-              </tr>
-              <tr>
-                <td>Performance</td>
-                <td>Faster</td>
-                <td>Slightly slower</td>
-              </tr>
-              <tr>
-                <td>Use Case</td>
-                <td>Fixed data</td>
-                <td>Changing data</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-
-        <section>
-          <h2>Accessing Tuple Elements</h2>
-          <pre><code class="language-python">colors = ("red", "green", "blue")
+          <br />
+          <h2 class="text-center">Accessing Tuple Elements</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">colors = ("red", "green", "blue")
 
 print(colors[0])  # red
 print(colors[-1]) # blue</code></pre>
-          <p>Indexing starts at <strong>0</strong>.</p>
+          <br />
+          <p class="text-center">Indexing starts at <strong>0</strong>.</p>
         </section>
 
         <section>
-          <h2>Tuple Slicing</h2>
-          <pre><code class="language-python">numbers = (10, 20, 30, 40, 50)
+          <br />
+          <h2 class="text-center">Tuple Slicing</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (10, 20, 30, 40, 50)
 
 print(numbers[1:4])  # (20, 30, 40)</code></pre>
-          <pre><code class="language-python">tuple[start:end]</code></pre>
+
+          <br />
+
+          <p class="text-center">Format:</p>
+
+          <pre
+            style="margin: auto"
+          ><code class="language-python">tuple[start:end]</code></pre>
         </section>
 
         <section>
-          <h2>Immutability Explained</h2>
-          <pre><code class="language-python">numbers = (1, 2, 3)
-numbers[0] = 10  # TypeError</code></pre>
-          <ul>
-            <li>Safer for constant data</li>
-            <li>Memory efficient</li>
-          </ul>
+          <br />
+          <h2 class="text-center">Tuple Packing &amp; Unpacking</h2>
+          <h4 class="text-center">Packing</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">person = ("Alice", 25, "Engineer")</code></pre>
+          <br />
+          <h4 class="text-center">Unpacking</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">name, age, job = person</code></pre>
         </section>
 
         <section>
-          <h2>Why Use Tuples?</h2>
-          <ul>
-            <li>Data should not change</li>
-            <li>Returning multiple values from functions</li>
-            <li>Using data as dictionary keys</li>
-            <li>Storing fixed configuration</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Tuple Packing &amp; Unpacking</h2>
-          <h4>Packing</h4>
-          <pre><code class="language-python">person = ("Alice", 25, "Engineer")</code></pre>
-          <h4>Unpacking</h4>
-          <pre><code class="language-python">name, age, job = person</code></pre>
-        </section>
-
-        <section>
-          <h2>Extended Unpacking</h2>
-          <pre><code class="language-python">numbers = (1, 2, 3, 4, 5)
+          <br />
+          <h2 class="text-center">Extended Unpacking</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (1, 2, 3, 4, 5)
 
 first, *middle, last = numbers</code></pre>
+          <br />
           <ul>
             <li>first = 1</li>
             <li>middle = [2, 3, 4]</li>
@@ -384,56 +372,65 @@ first, *middle, last = numbers</code></pre>
         </section>
 
         <section>
-          <h2>Tuple Methods</h2>
-          <p>Tuples have only two built-in methods:</p>
-          <pre><code class="language-python">numbers = (1, 2, 2, 3)
+          <br />
+          <h2 class="text-center">Tuple Methods</h2>
+          <p class="text-center">Tuples have only two built-in methods:</p>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (1, 2, 2, 3)
 
 numbers.count(2)   # 2
 numbers.index(3)   # 3</code></pre>
         </section>
 
         <section>
-          <h2>Nested Tuples</h2>
-          <pre><code class="language-python">matrix = (
+          <br />
+          <h2 class="text-center">Nested Tuples</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">matrix = (
     (1, 2),
     (3, 4)
 )
 
 print(matrix[0][1])  # 2</code></pre>
-          <p>Useful for structured data.</p>
+          <br />
+          <p class="text-center">Useful for structured data.</p>
         </section>
 
         <section>
-          <h2>Converting Between List and Tuple</h2>
-          <h4>Tuple → List</h4>
-          <pre><code class="language-python">numbers = (1, 2, 3)
+          <br />
+          <h2 class="text-center">List and Tuple Conversion</h2>
+          <br />
+          <h4 class="text-center">Tuple → List</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (1, 2, 3)
 numbers_list = list(numbers)</code></pre>
-          <h4>List → Tuple</h4>
-          <pre><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
+          <br />
+          <h4 class="text-center">List → Tuple</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
         </section>
 
         <section>
-          <h2>Tuples as Dictionary Keys</h2>
-          <pre><code class="language-python">locations = {
+          <br />
+          <h2 class="text-center">Tuples as Dictionary Keys</h2>
+          <br />
+          <pre style="margin: auto"><code class="language-python">locations = {
     (40.7128, -74.0060): "New York",
     (34.0522, -118.2437): "Los Angeles"
 }</code></pre>
-          <p>Lists cannot be used as keys.</p>
+          <br />
+          <p class="text-center">Lists cannot be used as keys.</p>
         </section>
 
         <section>
-          <h2>Performance Benefits</h2>
-          <ul>
-            <li>Use less memory</li>
-            <li>Are faster to iterate</li>
-            <li>Provide data integrity</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>When in Doubt:</h2>
-          <p>Use a <strong>tuple</strong> for fixed data.</p>
-          <p>Use a <strong>list</strong> for changing data.</p>
+          <br>
+          <h2 class="text-center">When To Use Which</h2>
+          <br>
+          <p class="text-center">Use a <strong>tuple</strong> for fixed data.</p>
+          <p class="text-center">Use a <strong>list</strong> for changing data.</p>
         </section>
 
         <section>
@@ -540,6 +537,7 @@ numbers_list = list(numbers)</code></pre>
       Reveal.initialize({
         hash: true,
         center: false,
+        slideNumber: "c/t",
 
         // Learn about plugins: https://revealjs.com/plugins/
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
