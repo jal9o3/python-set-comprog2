@@ -746,6 +746,18 @@ numbers_list = list(numbers)</code></pre>
         return token;
       };
 
+      const getShuffledIndexes = (length) => {
+        const indexes = Array.from({ length }, (_, index) => index);
+        for (let index = indexes.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [indexes[index], indexes[randomIndex]] = [
+            indexes[randomIndex],
+            indexes[index],
+          ];
+        }
+        return indexes;
+      };
+
       const updateHeader = () => {
         roundText.textContent = `Round ${currentRoundIndex + 1} of ${tupleRounds.length}`;
         scoreText.textContent = `Score: ${score}`;
@@ -800,7 +812,10 @@ numbers_list = list(numbers)</code></pre>
         answer.innerHTML = "";
         setFeedback("");
 
-        round.tokens.forEach((text, index) => {
+        const shuffledIndexes = getShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const text = round.tokens[index];
           const token = makeTokenButton(text, index);
           token.addEventListener("click", () => {
             selectedIndexes.push(index);
