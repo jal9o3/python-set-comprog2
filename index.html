@@ -158,7 +158,11 @@
       }
 
       .token.answer-token {
-        border-width: 0px;
+        border: 2px solid transparent;
+      }
+
+      .token.answer-token:hover {
+        border-color: #dc2626;
       }
 
       .game-controls {
@@ -717,7 +721,7 @@ numbers_list = list(numbers)</code></pre>
     <script>
       const tupleRounds = [
         {
-          prompt: "Target coordinates are 10 and 20.",
+          prompt: "The target's coordinates are (10, 20).",
           target: ["target_coordinates", "=", "(10,", "20)"],
           tokens: [
             "target_coordinates",
@@ -731,7 +735,7 @@ numbers_list = list(numbers)</code></pre>
         },
         {
           prompt:
-            "School days are Monday, Tuesday, Wednesday, Thursday, and Friday.",
+            "School days are Mondays to Fridays.",
           target: [
             "school_days",
             "=",
@@ -758,7 +762,7 @@ numbers_list = list(numbers)</code></pre>
           ],
         },
         {
-          prompt: "Crime scene coordinates are 14.5995 and 120.9842.",
+          prompt: "The crime scene coordinates are 14.5995, 120.9842.",
           target: ["crime_scene_coords", "=", "(14.5995,", "120.9842)"],
           tokens: [
             "crime_scene_coords",
