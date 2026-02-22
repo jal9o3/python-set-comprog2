@@ -1,18 +1,22 @@
+# Lesson IV
+## Python Tuples
+### Immutable Ordered Collections
 
-# Python Tuples
-## Immutable Ordered Collections
+Jerome Loria — February 2026
 
 ---
 
 ## What is a Tuple?
 
-A **tuple** is:
 - An ordered collection
-- Immutable (cannot be changed after creation)
 - Allows duplicate values
 - Can store mixed data types
+- Immutable (cannot be changed after creation)
 
-Example:
+---
+
+Tuples look like this:
+
 ```python
 my_tuple = (1, 2, 3)
 ```
@@ -21,40 +25,162 @@ my_tuple = (1, 2, 3)
 
 ## Creating Tuples
 
-### Basic Syntax
-
+#### Basic Syntax
 ```python
 numbers = (10, 20, 30)
 ```
 
-### Without Parentheses (Tuple Packing)
-
+#### Tuple Packing
 ```python
 numbers = 10, 20, 30
 ```
 
-### Single-Element Tuple (Important!)
-
+#### Single-Element Tuple
 ```python
 single = (5,)   # Comma is required!
 ```
 
 ---
 
-## Tuple vs List
+## Tuple != Parentheses
 
-| Feature     | Tuple      | List            |
-| ----------- | ---------- | --------------- |
-| Mutable     | ❌ No       | ✅ Yes           |
-| Syntax      | `( )`      | `[ ]`           |
-| Performance | Faster     | Slightly slower |
-| Use Case    | Fixed data | Changing data   |
+```python
+a = (1, 2, 3)
+b = 1, 2, 3
+
+print(type(a))  # tuple
+print(type(b))  # tuple
+```
+
+**The comma**, not the parentheses, creates a tuple.
+
+---
+
+## Parentheses for Clarity
+
+Parentheses are optional, but they are recommended for:
+
+- Readability
+- Preventing ambiguity
+- Multi-line formatting
+
+```python
+coordinates = (
+    40.7128,
+    -74.0060
+)
+```
+
+---
+
+## Single-Element Tuple Rule
+
+Common mistake:
+```python
+single = (5)
+print(type(single))  # int
+```
+
+Correct:
+```python
+single = (5,)
+print(type(single))  # tuple
+```
+
+---
+
+## Empty Tuples
+
+Correct syntax:
+```python
+empty = ()
+```
+
+Invalid syntax:
+```python
+empty = ,   # SyntaxError
+```
+
+---
+
+## Tuple Creation from Iterables
+
+```python
+numbers = tuple([1, 2, 3])
+letters = tuple("abc")
+
+print(numbers)  # (1, 2, 3)
+print(letters)  # ('a', 'b', 'c')
+```
+
+---
+
+## List and Tuple Conversion
+
+#### Tuple → List
+```python
+numbers = (1, 2, 3)
+numbers_list = list(numbers)
+```
+
+#### List → Tuple
+```python
+numbers_tuple = tuple(numbers_list)
+```
+
+---
+
+## Trailing Commas
+
+```python
+values = (1, 2, 3,)
+```
+
+- Easier element additions
+- Valid and recommended in long tuples
+
+---
+
+## Nested Tuple Creation
+
+```python
+data = (
+    ("Alice", 25),
+    ("Bob", 30),
+    ("Charlie", 35)
+)
+```
+
+Useful for structured immutable records.
+
+---
+
+## Packing & Returns
+
+```python
+def get_user():
+    return "Alice", 25
+
+result = get_user()
+print(result)  # ('Alice', 25)
+```
+
+Python automatically packs return values into a tuple.
+
+---
+
+## Tuple Creation with Generators
+
+```python
+squares = tuple(x**2 for x in range(5))
+print(squares)  # (0, 1, 4, 9, 16)
+```
+
+The generator expression is consumed by `tuple()`.
 
 ---
 
 ## Accessing Tuple Elements
-
-Tuples use **indexing**:
 
 ```python
 colors = ("red", "green", "blue")
@@ -63,13 +189,11 @@ print(colors[0])  # red
 print(colors[-1]) # blue
 ```
 
-Indexing starts at `0`.
+Indexing starts at **0**.
 
 ---
 
 ## Tuple Slicing
-
-Extract a portion of a tuple:
 
 ```python
 numbers = (10, 20, 30, 40, 50)
@@ -77,129 +201,28 @@ numbers = (10, 20, 30, 40, 50)
 print(numbers[1:4])  # (20, 30, 40)
 ```
 
-Syntax:
-
-```
+Format:
+```python
 tuple[start:end]
 ```
 
 ---
 
-## Immutability Explained
-
-Tuples **cannot be changed** after creation.
-
-```python
-numbers = (1, 2, 3)
-numbers[0] = 10  # ❌ TypeError
-```
-
-This makes tuples:
-
-* Safer for constant data
-* Memory efficient
-
----
-
-## Why Use Tuples?
-
-Use tuples when:
-
-* Data should not change
-* Returning multiple values from functions
-* Using data as dictionary keys
-* Storing fixed configuration
-
----
-
 ## Tuple Packing & Unpacking
 
-### Packing
-
+#### Packing
 ```python
 person = ("Alice", 25, "Engineer")
 ```
 
-### Unpacking
-
+#### Unpacking
 ```python
 name, age, job = person
-```
-
-Each variable receives a corresponding value.
-
----
-
-## Extended Unpacking
-
-Using `*` operator:
-
-```python
-numbers = (1, 2, 3, 4, 5)
-
-first, *middle, last = numbers
-```
-
-Results:
-
-* `first = 1`
-* `middle = [2, 3, 4]`
-* `last = 5`
-
----
-
-## Tuple Methods
-
-Tuples have only **two built-in methods**:
-
-```python
-numbers = (1, 2, 2, 3)
-
-numbers.count(2)   # 2
-numbers.index(3)   # 3
-```
-
-Because tuples are immutable.
-
----
-
-## Nested Tuples
-
-Tuples can contain other tuples:
-
-```python
-matrix = (
-    (1, 2),
-    (3, 4)
-)
-
-print(matrix[0][1])  # 2
-```
-
-Useful for structured data.
-
----
-
-## Converting Between List and Tuple
-
-### Tuple → List
-
-```python
-numbers = (1, 2, 3)
-numbers_list = list(numbers)
-```
-
-### List → Tuple
-
-```python
-numbers_tuple = tuple(numbers_list)
 ```
 
 ---
 
 ## Tuples as Dictionary Keys
-
-Tuples can be used as dictionary keys because they are immutable.
 
 ```python
 locations = {
@@ -208,29 +231,20 @@ locations = {
 }
 ```
 
-Lists cannot be used as keys.
+Lists cannot be used as keys, **but tuples can be.**
 
 ---
 
-## Performance Benefits
-
-Tuples:
-
-* Use less memory
-* Are faster to iterate
-* Provide data integrity
-
----
-
-## When in doubt:
+## When To Use Which
 
 Use a **tuple** for fixed data.
+
 Use a **list** for changing data.
 
 ---
 
-## Class Activity
+## Class Practice
+
 1. Create a tuple with 5 values.
 2. Unpack it into variables.
 3. Slice the middle 3 elements.
-
