@@ -585,6 +585,60 @@ print(squares)  # (0, 1, 4, 9, 16)
 
         <section>
           <br />
+          <h3 class="text-center">Using tuple generation, translate:</h3>
+          <div class="text-center">
+            <span>"</span>
+            <span
+              style="font-style: italic"
+              class="english-generator-sentence"
+            ></span>
+            <span>"</span>
+          </div>
+          <div class="tuple-game" id="generator-tuple-game">
+            <div class="game-progress">
+              <span id="generator-tuple-round">Round 1 of 3</span>
+              <span id="generator-tuple-score">Score: 0</span>
+            </div>
+
+            <div
+              id="generator-tuple-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="generator-tuple-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button
+                id="generator-tuple-check"
+                class="game-btn primary"
+                type="button"
+              >
+                Check
+              </button>
+              <button
+                id="generator-tuple-clear"
+                class="game-btn secondary"
+                type="button"
+              >
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="generator-tuple-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Accessing Tuple Elements</h2>
           <br />
           <pre
@@ -628,49 +682,6 @@ print(numbers[1:4])  # (20, 30, 40)</code></pre>
           <pre
             style="margin: auto"
           ><code class="language-python">name, age, job = person</code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Extended Unpacking</h2>
-          <br />
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (1, 2, 3, 4, 5)
-
-first, *middle, last = numbers</code></pre>
-          <br />
-          <ul>
-            <li>first = 1</li>
-            <li>middle = [2, 3, 4]</li>
-            <li>last = 5</li>
-          </ul>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple Methods</h2>
-          <p class="text-center">Tuples have only two built-in methods:</p>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (1, 2, 2, 3)
-
-numbers.count(2)   # 2
-numbers.index(3)   # 3</code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Nested Tuples</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">matrix = (
-    (1, 2),
-    (3, 4)
-)
-
-print(matrix[0][1])  # 2</code></pre>
-          <br />
-          <p class="text-center">Useful for structured data.</p>
         </section>
 
         <section>
@@ -1398,6 +1409,236 @@ numbers_list = list(numbers)</code></pre>
       });
 
       renderEmptyRound();
+    </script>
+
+    <script>
+      const generatorTupleRounds = [
+        {
+          prompt: "Squares from 0 to 4.",
+          target: [
+            "squares",
+            "=",
+            "tuple(",
+            "x**2",
+            "for",
+            "x",
+            "in",
+            "range(5)",
+            ")",
+          ],
+          tokens: [
+            "squares",
+            "=",
+            "tuple(",
+            "x**2",
+            "for",
+            "x",
+            "in",
+            "range(5)",
+            ")",
+            "[",
+            "]",
+            "list(",
+          ],
+        },
+        {
+          prompt: "Uppercase each letter in the word tuple.",
+          target: [
+            "caps",
+            "=",
+            "tuple(",
+            "ch.upper()",
+            "for",
+            "ch",
+            "in",
+            '"tuple"',
+            ")",
+          ],
+          tokens: [
+            "caps",
+            "=",
+            "tuple(",
+            "ch.upper()",
+            "for",
+            "ch",
+            "in",
+            '"tuple"',
+            ")",
+            "set(",
+            "append",
+            "==",
+          ],
+        },
+        {
+          prompt: "Take each number from 1 to 3 and add 10.",
+          target: [
+            "plus_ten",
+            "=",
+            "tuple(",
+            "n+10",
+            "for",
+            "n",
+            "in",
+            "range(1,",
+            "4)",
+            ")",
+          ],
+          tokens: [
+            "plus_ten",
+            "=",
+            "tuple(",
+            "n+10",
+            "for",
+            "n",
+            "in",
+            "range(1,",
+            "4)",
+            ")",
+            "{",
+            "}",
+            "range(4)",
+          ],
+        },
+      ];
+
+      const generatorBank = document.getElementById("generator-tuple-bank");
+      const generatorAnswer = document.getElementById("generator-tuple-answer");
+      const generatorEnglishSentence = document.querySelector(
+        ".english-generator-sentence",
+      );
+      const generatorRoundText = document.getElementById("generator-tuple-round");
+      const generatorScoreText = document.getElementById("generator-tuple-score");
+      const generatorFeedback = document.getElementById(
+        "generator-tuple-feedback",
+      );
+      const generatorCheckBtn = document.getElementById("generator-tuple-check");
+      const generatorClearBtn = document.getElementById("generator-tuple-clear");
+
+      let generatorCurrentRoundIndex = 0;
+      let generatorScore = 0;
+      let generatorSelectedIndexes = [];
+
+      const updateGeneratorHeader = () => {
+        generatorRoundText.textContent = `Round ${generatorCurrentRoundIndex + 1} of ${generatorTupleRounds.length}`;
+        generatorScoreText.textContent = `Score: ${generatorScore}`;
+      };
+
+      const updateGeneratorAnswerPlaceholder = () => {
+        generatorAnswer.classList.toggle(
+          "empty",
+          generatorSelectedIndexes.length === 0,
+        );
+      };
+
+      const setGeneratorFeedback = (message, tone = "") => {
+        generatorFeedback.textContent = message;
+        generatorFeedback.classList.remove("success", "error");
+        if (tone) {
+          generatorFeedback.classList.add(tone);
+        }
+      };
+
+      const syncGeneratorBankState = () => {
+        const active = new Set(generatorSelectedIndexes);
+        generatorBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderGeneratorAnswer = () => {
+        const round = generatorTupleRounds[generatorCurrentRoundIndex];
+        generatorAnswer.innerHTML = "";
+
+        generatorSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            generatorSelectedIndexes.splice(answerIndex, 1);
+            renderGeneratorAnswer();
+            syncGeneratorBankState();
+            updateGeneratorAnswerPlaceholder();
+          });
+          generatorAnswer.appendChild(token);
+        });
+
+        updateGeneratorAnswerPlaceholder();
+      };
+
+      const renderGeneratorRound = () => {
+        const round = generatorTupleRounds[generatorCurrentRoundIndex];
+        generatorSelectedIndexes = [];
+        generatorBank.innerHTML = "";
+        generatorAnswer.innerHTML = "";
+        if (generatorEnglishSentence) {
+          generatorEnglishSentence.textContent = round.prompt;
+        }
+        setGeneratorFeedback("");
+
+        const shuffledIndexes = getShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const text = round.tokens[index];
+          const token = makeTokenButton(text, index);
+          token.addEventListener("click", () => {
+            generatorSelectedIndexes.push(index);
+            renderGeneratorAnswer();
+            syncGeneratorBankState();
+          });
+          generatorBank.appendChild(token);
+        });
+
+        updateGeneratorHeader();
+        syncGeneratorBankState();
+        updateGeneratorAnswerPlaceholder();
+      };
+
+      const goToNextGeneratorRound = () => {
+        if (generatorCurrentRoundIndex < generatorTupleRounds.length - 1) {
+          generatorCurrentRoundIndex += 1;
+          renderGeneratorRound();
+          return;
+        }
+
+        setGeneratorFeedback(
+          `Challenge complete! Final score: ${generatorScore}/${generatorTupleRounds.length}`,
+          "success",
+        );
+        generatorCheckBtn.disabled = true;
+      };
+
+      generatorCheckBtn.addEventListener("click", () => {
+        const round = generatorTupleRounds[generatorCurrentRoundIndex];
+        const answerTokens = generatorSelectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          generatorScore += 1;
+          updateGeneratorHeader();
+          setGeneratorFeedback("Excellent! Generator tuple created.", "success");
+          launchConfetti();
+          setTimeout(goToNextGeneratorRound, 750);
+          return;
+        }
+
+        setGeneratorFeedback("Not quite. Recheck, then try again.", "error");
+      });
+
+      generatorClearBtn.addEventListener("click", () => {
+        generatorSelectedIndexes = [];
+        renderGeneratorAnswer();
+        syncGeneratorBankState();
+        setGeneratorFeedback("Answer cleared.");
+      });
+
+      renderGeneratorRound();
     </script>
   </body>
 </html>
