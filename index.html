@@ -390,9 +390,7 @@ print(type(single))  # tuple
 
         <section>
           <br />
-          <h3 class="text-center">
-            Using a single-element tuple, translate:
-          </h3>
+          <h3 class="text-center">Using a single-element tuple, translate:</h3>
           <div class="text-center">
             <span>"</span>
             <span
@@ -464,7 +462,10 @@ empty = ,   # SyntaxError
           <h3 class="text-center">Using an empty tuple, translate:</h3>
           <div class="text-center">
             <span>"</span>
-            <span style="font-style: italic" class="english-empty-sentence"></span>
+            <span
+              style="font-style: italic"
+              class="english-empty-sentence"
+            ></span>
             <span>"</span>
           </div>
           <div class="tuple-game" id="empty-tuple-game">
@@ -521,6 +522,22 @@ letters = tuple("abc")
 print(numbers)  # (1, 2, 3)
 print(letters)  # ('a', 'b', 'c')
   </code></pre>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">List and Tuple Conversion</h2>
+          <br />
+          <h4 class="text-center">Tuple → List</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = (1, 2, 3)
+numbers_list = list(numbers)</code></pre>
+          <br />
+          <h4 class="text-center">List → Tuple</h4>
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
         </section>
 
         <section>
@@ -672,6 +689,60 @@ print(numbers[1:4])  # (20, 30, 40)</code></pre>
 
         <section>
           <br />
+          <h3 class="text-center">Using tuple slicing, translate:</h3>
+          <div class="text-center">
+            <span>"</span>
+            <span
+              style="font-style: italic"
+              class="english-slicing-sentence"
+            ></span>
+            <span>"</span>
+          </div>
+          <div class="tuple-game" id="slicing-tuple-game">
+            <div class="game-progress">
+              <span id="slicing-tuple-round">Round 1 of 3</span>
+              <span id="slicing-tuple-score">Score: 0</span>
+            </div>
+
+            <div
+              id="slicing-tuple-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="slicing-tuple-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button
+                id="slicing-tuple-check"
+                class="game-btn primary"
+                type="button"
+              >
+                Check
+              </button>
+              <button
+                id="slicing-tuple-clear"
+                class="game-btn secondary"
+                type="button"
+              >
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="slicing-tuple-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Tuple Packing &amp; Unpacking</h2>
           <h4 class="text-center">Packing</h4>
           <pre
@@ -686,22 +757,6 @@ print(numbers[1:4])  # (20, 30, 40)</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">List and Tuple Conversion</h2>
-          <br />
-          <h4 class="text-center">Tuple → List</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (1, 2, 3)
-numbers_list = list(numbers)</code></pre>
-          <br />
-          <h4 class="text-center">List → Tuple</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
-        </section>
-
-        <section>
-          <br />
           <h2 class="text-center">Tuples as Dictionary Keys</h2>
           <br />
           <pre style="margin: auto"><code class="language-python">locations = {
@@ -709,7 +764,7 @@ numbers_list = list(numbers)</code></pre>
     (34.0522, -118.2437): "Los Angeles"
 }</code></pre>
           <br />
-          <p class="text-center">Lists cannot be used as keys.</p>
+          <p class="text-center">Lists cannot be used as keys, <b>but tuples can be.</b></p>
         </section>
 
         <section>
@@ -1089,27 +1144,14 @@ numbers_list = list(numbers)</code></pre>
           tokens: ["magic_numbers", "=", "(7", "(7,", ")", "[7,", "]", "=="],
         },
         {
-          prompt:
-            'The only favorite color is red.',
+          prompt: "The only favorite color is red.",
           target: ["favorite_colors", "=", '"red",'],
-          tokens: [
-            "favorite_colors",
-            "=",
-            '"red"',
-            '"red",',
-          ],
+          tokens: ["favorite_colors", "=", '"red"', '"red",'],
         },
         {
           prompt: "Your only enemy is yourself.",
           target: ["enemies", "=", '("self",)'],
-          tokens: [
-            "enemies",
-            "=",
-            '("self",)',
-            '("self")',
-            "[self,]",
-            "==",
-          ],
+          tokens: ["enemies", "=", '("self",)', '("self")', "[self,]", "=="],
         },
       ];
 
@@ -1297,7 +1339,10 @@ numbers_list = list(numbers)</code></pre>
       };
 
       const updateEmptyAnswerPlaceholder = () => {
-        emptyAnswer.classList.toggle("empty", emptySelectedIndexes.length === 0);
+        emptyAnswer.classList.toggle(
+          "empty",
+          emptySelectedIndexes.length === 0,
+        );
       };
 
       const setEmptyFeedback = (message, tone = "") => {
@@ -1412,6 +1457,187 @@ numbers_list = list(numbers)</code></pre>
     </script>
 
     <script>
+      const slicingTupleRounds = [
+        {
+          prompt: "Get the middle three clues from clues.",
+          target: ["middle_clues", "=", "clues[1:4]"],
+          tokens: [
+            "middle_clues",
+            "=",
+            "clues[1:4]",
+            "clues[1,4]",
+            "clues[:4]",
+            "clues[1:]",
+            "==",
+          ],
+        },
+        {
+          prompt: "Get the first two suspects from suspects.",
+          target: ["first_two", "=", "suspects[:2]"],
+          tokens: [
+            "first_two",
+            "=",
+            "suspects[:2]",
+            "suspects[2:]",
+            "suspects[0:3]",
+            "suspects[:1]",
+            "==",
+          ],
+        },
+        {
+          prompt: "Get the last two checkpoints from checkpoints.",
+          target: ["last_two", "=", "checkpoints[-2:]"],
+          tokens: [
+            "last_two",
+            "=",
+            "checkpoints[-2:]",
+            "checkpoints[:2]",
+            "checkpoints[-2]",
+            "checkpoints[2:]",
+            "==",
+          ],
+        },
+      ];
+
+      const slicingBank = document.getElementById("slicing-tuple-bank");
+      const slicingAnswer = document.getElementById("slicing-tuple-answer");
+      const slicingEnglishSentence = document.querySelector(
+        ".english-slicing-sentence",
+      );
+      const slicingRoundText = document.getElementById("slicing-tuple-round");
+      const slicingScoreText = document.getElementById("slicing-tuple-score");
+      const slicingFeedback = document.getElementById("slicing-tuple-feedback");
+      const slicingCheckBtn = document.getElementById("slicing-tuple-check");
+      const slicingClearBtn = document.getElementById("slicing-tuple-clear");
+
+      let slicingCurrentRoundIndex = 0;
+      let slicingScore = 0;
+      let slicingSelectedIndexes = [];
+
+      const updateSlicingHeader = () => {
+        slicingRoundText.textContent = `Round ${slicingCurrentRoundIndex + 1} of ${slicingTupleRounds.length}`;
+        slicingScoreText.textContent = `Score: ${slicingScore}`;
+      };
+
+      const updateSlicingAnswerPlaceholder = () => {
+        slicingAnswer.classList.toggle(
+          "empty",
+          slicingSelectedIndexes.length === 0,
+        );
+      };
+
+      const setSlicingFeedback = (message, tone = "") => {
+        slicingFeedback.textContent = message;
+        slicingFeedback.classList.remove("success", "error");
+        if (tone) {
+          slicingFeedback.classList.add(tone);
+        }
+      };
+
+      const syncSlicingBankState = () => {
+        const active = new Set(slicingSelectedIndexes);
+        slicingBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderSlicingAnswer = () => {
+        const round = slicingTupleRounds[slicingCurrentRoundIndex];
+        slicingAnswer.innerHTML = "";
+
+        slicingSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            slicingSelectedIndexes.splice(answerIndex, 1);
+            renderSlicingAnswer();
+            syncSlicingBankState();
+            updateSlicingAnswerPlaceholder();
+          });
+          slicingAnswer.appendChild(token);
+        });
+
+        updateSlicingAnswerPlaceholder();
+      };
+
+      const renderSlicingRound = () => {
+        const round = slicingTupleRounds[slicingCurrentRoundIndex];
+        slicingSelectedIndexes = [];
+        slicingBank.innerHTML = "";
+        slicingAnswer.innerHTML = "";
+        if (slicingEnglishSentence) {
+          slicingEnglishSentence.textContent = round.prompt;
+        }
+        setSlicingFeedback("");
+
+        const shuffledIndexes = getShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const text = round.tokens[index];
+          const token = makeTokenButton(text, index);
+          token.addEventListener("click", () => {
+            slicingSelectedIndexes.push(index);
+            renderSlicingAnswer();
+            syncSlicingBankState();
+          });
+          slicingBank.appendChild(token);
+        });
+
+        updateSlicingHeader();
+        syncSlicingBankState();
+        updateSlicingAnswerPlaceholder();
+      };
+
+      const goToNextSlicingRound = () => {
+        if (slicingCurrentRoundIndex < slicingTupleRounds.length - 1) {
+          slicingCurrentRoundIndex += 1;
+          renderSlicingRound();
+          return;
+        }
+
+        setSlicingFeedback(
+          `Challenge complete! Final score: ${slicingScore}/${slicingTupleRounds.length}`,
+          "success",
+        );
+        slicingCheckBtn.disabled = true;
+      };
+
+      slicingCheckBtn.addEventListener("click", () => {
+        const round = slicingTupleRounds[slicingCurrentRoundIndex];
+        const answerTokens = slicingSelectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          slicingScore += 1;
+          updateSlicingHeader();
+          setSlicingFeedback("Perfect slice! Nicely done.", "success");
+          launchConfetti();
+          setTimeout(goToNextSlicingRound, 750);
+          return;
+        }
+
+        setSlicingFeedback("Not quite. Recheck your slice and try again.", "error");
+      });
+
+      slicingClearBtn.addEventListener("click", () => {
+        slicingSelectedIndexes = [];
+        renderSlicingAnswer();
+        syncSlicingBankState();
+        setSlicingFeedback("Answer cleared.");
+      });
+
+      renderSlicingRound();
+    </script>
+
+    <script>
       const generatorTupleRounds = [
         {
           prompt: "Squares from 0 to 4.",
@@ -1506,13 +1732,21 @@ numbers_list = list(numbers)</code></pre>
       const generatorEnglishSentence = document.querySelector(
         ".english-generator-sentence",
       );
-      const generatorRoundText = document.getElementById("generator-tuple-round");
-      const generatorScoreText = document.getElementById("generator-tuple-score");
+      const generatorRoundText = document.getElementById(
+        "generator-tuple-round",
+      );
+      const generatorScoreText = document.getElementById(
+        "generator-tuple-score",
+      );
       const generatorFeedback = document.getElementById(
         "generator-tuple-feedback",
       );
-      const generatorCheckBtn = document.getElementById("generator-tuple-check");
-      const generatorClearBtn = document.getElementById("generator-tuple-clear");
+      const generatorCheckBtn = document.getElementById(
+        "generator-tuple-check",
+      );
+      const generatorClearBtn = document.getElementById(
+        "generator-tuple-clear",
+      );
 
       let generatorCurrentRoundIndex = 0;
       let generatorScore = 0;
@@ -1622,7 +1856,10 @@ numbers_list = list(numbers)</code></pre>
         if (correct) {
           generatorScore += 1;
           updateGeneratorHeader();
-          setGeneratorFeedback("Excellent! Generator tuple created.", "success");
+          setGeneratorFeedback(
+            "Excellent! Generator tuple created.",
+            "success",
+          );
           launchConfetti();
           setTimeout(goToNextGeneratorRound, 750);
           return;
