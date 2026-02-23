@@ -281,6 +281,59 @@ empty = set()</code></pre>
 
         <section>
           <br />
+          <h3 class="text-center">Using a set, translate:</h3>
+
+          <div class="text-center">
+            <span>"</span>
+            <span style="font-style: italic" class="english-set-sentence"></span>
+            <span>"</span>
+          </div>
+
+          <div class="tuple-game" id="set-builder-game">
+            <div class="game-progress">
+              <span id="set-builder-round">Round 1 of 3</span>
+              <span id="set-builder-score">Score: 0</span>
+            </div>
+
+            <div
+              id="set-builder-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="set-builder-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button
+                id="set-builder-check"
+                class="game-btn primary"
+                type="button"
+              >
+                Check
+              </button>
+              <button
+                id="set-builder-clear"
+                class="game-btn secondary"
+                type="button"
+              >
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="set-builder-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Set Characteristics</h2>
           <br />
           <ul>
@@ -853,6 +906,217 @@ b &gt;= a</code></pre>
 
       Reveal.on("ready", addCopyButtons);
       Reveal.on("slidechanged", addCopyButtons);
+    </script>
+
+    <script>
+      const setBuilderRounds = [
+        {
+          prompt: "Concrete, steel, and glass are materials.",
+          target: ["Materials", "=", "{'Concrete',", "'Steel',", "'Glass'}"],
+          tokens: [
+            "Materials",
+            "=",
+            "{'Concrete',",
+            "'Steel',",
+            "'Glass'}",
+            "['Concrete',",
+            "'Steel',",
+            "'Glass']",
+            "==",
+            "()",
+          ],
+        },
+        {
+          prompt: "Speed limit and volume limit are in the active settings.",
+          target: [
+            "Active_Settings",
+            "=",
+            "{'Speed_Limit',",
+            "'Volume_Limit'}",
+          ],
+          tokens: [
+            "Active_Settings",
+            "=",
+            "{'Speed_Limit',",
+            "'Volume_Limit'}",
+            "['Speed_Limit',",
+            "'Volume_Limit']",
+          ],
+        },
+        {
+          prompt: "Room_204 includes WiFi, Bed, and Ocean_View.",
+          target: ["Room_204", "=", "{'WiFi',", "'Bed',", "'Ocean_View'}"],
+          tokens: [
+            "Room_204",
+            "=",
+            "{'WiFi',",
+            "'Bed',",
+            "'Ocean_View'}",
+            "['WiFi',",
+            "'Bed',",
+            "'Ocean_View']",
+            "==",
+          ],
+        },
+      ];
+
+      const setBuilderBank = document.getElementById("set-builder-bank");
+      const setBuilderAnswer = document.getElementById("set-builder-answer");
+      const setBuilderSentence = document.querySelector(".english-set-sentence");
+      const setBuilderRoundText = document.getElementById("set-builder-round");
+      const setBuilderScoreText = document.getElementById("set-builder-score");
+      const setBuilderFeedback = document.getElementById("set-builder-feedback");
+      const setBuilderCheckBtn = document.getElementById("set-builder-check");
+      const setBuilderClearBtn = document.getElementById("set-builder-clear");
+
+      let setBuilderRoundIndex = 0;
+      let setBuilderScore = 0;
+      let setBuilderSelectedIndexes = [];
+
+      const makeSetBuilderTokenButton = (text, index) => {
+        const token = document.createElement("button");
+        token.type = "button";
+        token.className = "token";
+        token.textContent = text;
+        token.dataset.index = String(index);
+        return token;
+      };
+
+      const getSetBuilderShuffledIndexes = (length) => {
+        const indexes = Array.from({ length }, (_, index) => index);
+        for (let index = indexes.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [indexes[index], indexes[randomIndex]] = [
+            indexes[randomIndex],
+            indexes[index],
+          ];
+        }
+        return indexes;
+      };
+
+      const updateSetBuilderHeader = () => {
+        setBuilderRoundText.textContent = `Round ${setBuilderRoundIndex + 1} of ${setBuilderRounds.length}`;
+        setBuilderScoreText.textContent = `Score: ${setBuilderScore}`;
+      };
+
+      const updateSetBuilderAnswerPlaceholder = () => {
+        setBuilderAnswer.classList.toggle(
+          "empty",
+          setBuilderSelectedIndexes.length === 0,
+        );
+      };
+
+      const setSetBuilderFeedback = (message, tone = "") => {
+        setBuilderFeedback.textContent = message;
+        setBuilderFeedback.classList.remove("success", "error");
+        if (tone) {
+          setBuilderFeedback.classList.add(tone);
+        }
+      };
+
+      const syncSetBuilderBankState = () => {
+        const active = new Set(setBuilderSelectedIndexes);
+        setBuilderBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderSetBuilderAnswer = () => {
+        const round = setBuilderRounds[setBuilderRoundIndex];
+        setBuilderAnswer.innerHTML = "";
+
+        setBuilderSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeSetBuilderTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            setBuilderSelectedIndexes.splice(answerIndex, 1);
+            renderSetBuilderAnswer();
+            syncSetBuilderBankState();
+            updateSetBuilderAnswerPlaceholder();
+          });
+          setBuilderAnswer.appendChild(token);
+        });
+
+        updateSetBuilderAnswerPlaceholder();
+      };
+
+      const renderSetBuilderRound = () => {
+        const round = setBuilderRounds[setBuilderRoundIndex];
+        setBuilderSelectedIndexes = [];
+        setBuilderBank.innerHTML = "";
+        setBuilderAnswer.innerHTML = "";
+
+        if (setBuilderSentence) {
+          setBuilderSentence.textContent = round.prompt;
+        }
+
+        setSetBuilderFeedback("");
+
+        const shuffledIndexes = getSetBuilderShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const token = makeSetBuilderTokenButton(round.tokens[index], index);
+          token.addEventListener("click", () => {
+            setBuilderSelectedIndexes.push(index);
+            renderSetBuilderAnswer();
+            syncSetBuilderBankState();
+          });
+          setBuilderBank.appendChild(token);
+        });
+
+        updateSetBuilderHeader();
+        syncSetBuilderBankState();
+        updateSetBuilderAnswerPlaceholder();
+      };
+
+      const goToNextSetBuilderRound = () => {
+        if (setBuilderRoundIndex < setBuilderRounds.length - 1) {
+          setBuilderRoundIndex += 1;
+          renderSetBuilderRound();
+          return;
+        }
+
+        setSetBuilderFeedback(
+          `Challenge complete! Final score: ${setBuilderScore}/${setBuilderRounds.length}`,
+          "success",
+        );
+        setBuilderCheckBtn.disabled = true;
+      };
+
+      setBuilderCheckBtn.addEventListener("click", () => {
+        const round = setBuilderRounds[setBuilderRoundIndex];
+        const answerTokens = setBuilderSelectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          setBuilderScore += 1;
+          updateSetBuilderHeader();
+          setSetBuilderFeedback("Great job! Exact set syntax achieved.", "success");
+          launchConfetti();
+          setTimeout(goToNextSetBuilderRound, 750);
+          return;
+        }
+
+        setSetBuilderFeedback("Not quite. Recheck the set syntax and try again.", "error");
+      });
+
+      setBuilderClearBtn.addEventListener("click", () => {
+        setBuilderSelectedIndexes = [];
+        renderSetBuilderAnswer();
+        syncSetBuilderBankState();
+        setSetBuilderFeedback("Answer cleared.");
+      });
+
+      renderSetBuilderRound();
     </script>
 
     <script>
