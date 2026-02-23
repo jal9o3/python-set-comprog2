@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
 
-    <title>Python Tuple</title>
+    <title>Python Sets</title>
 
     <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/reveal.css" />
@@ -240,8 +240,8 @@
           <div class="text-center">
             <br />
             <h3>Lesson IV</h3>
-            <h1>Python Tuples</h1>
-            <h3>Immutable Ordered Collections</h3>
+            <h1>Python Sets</h1>
+            <h3>Unique Unordered Collections</h3>
             <br />
             <p>Jerome Loria</p>
             <p>February 2026</p>
@@ -250,31 +250,229 @@
 
         <section>
           <br />
-          <h2 class="text-center">What is a Tuple?</h2>
+          <h2 class="text-center">1. Introduction to Python Sets</h2>
           <br />
           <ul>
-            <li>An ordered collection</li>
-            <li>Allows duplicate values</li>
-            <li>Can store mixed data types</li>
-            <li>Immutable (cannot be changed after creation)</li>
+            <li>Sets are unordered, mutable collections of unique elements</li>
+            <li>Defined with <code>{}</code> or <code>set()</code></li>
+            <li>Built-in Python data type</li>
+            <li>Great for membership testing and deduplication</li>
           </ul>
         </section>
 
         <section>
-          <br /><br /><br />
-          <p class="text-center">Tuples look like this:</p>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">my_tuple = (1, 2, 3)</code></pre>
-          <img
-            style="margin-left: auto; display: block; width: 200px"
-            src="public/tupperware.png"
-            alt="Tupperware"
-          />
+          <br />
+          <h2 class="text-center">2. Why Use Sets?</h2>
+          <br />
+          <ul>
+            <li>Automatically remove duplicate values</li>
+            <li>Fast membership tests (average <strong>O(1)</strong>)</li>
+            <li>Support mathematical set operations</li>
+            <li>Useful for data cleaning and filtering</li>
+          </ul>
         </section>
 
         <section>
           <br />
+          <h2 class="text-center">3. Creating Sets</h2>
+          <pre style="margin: auto"><code class="language-python"># Using curly braces
+s1 = {1, 2, 3}
+
+# Using set() constructor
+s2 = set([1, 2, 3])
+
+# Empty set (correct way)
+empty = set()</code></pre>
+          <p class="text-center"><code>{}</code> creates an empty dictionary, not a set.</p>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">4. Set Characteristics</h2>
+          <br />
+          <ul>
+            <li>Unordered (no indexing)</li>
+            <li>Mutable (can add/remove elements)</li>
+            <li>No duplicate elements</li>
+            <li>Elements must be hashable</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">5. Valid Set Elements</h2>
+          <p><strong>Allowed:</strong> <code>int</code>, <code>float</code>, <code>str</code>, immutable <code>tuple</code></p>
+          <p><strong>Not allowed:</strong> <code>list</code>, <code>dict</code>, <code>set</code></p>
+          <pre style="margin: auto"><code class="language-python">valid = {1, "hello", (1, 2)}</code></pre>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">6. Removing Duplicates</h2>
+          <pre style="margin: auto"><code class="language-python">numbers = [1, 2, 2, 3, 4, 4]
+unique_numbers = set(numbers)
+print(unique_numbers)</code></pre>
+          <ul>
+            <li>Converts a list into unique elements</li>
+            <li>Order is not preserved</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">7. Adding Elements</h2>
+          <pre style="margin: auto"><code class="language-python">s = {1, 2, 3}
+s.add(4)</code></pre>
+          <ul>
+            <li><code>add()</code> inserts one element</li>
+            <li>No effect if the element already exists</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">8. Updating Sets</h2>
+          <pre style="margin: auto"><code class="language-python">s = {1, 2}
+s.update([3, 4])</code></pre>
+          <ul>
+            <li><code>update()</code> adds multiple elements</li>
+            <li>Accepts any iterable</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">9. Removing Elements</h2>
+          <pre style="margin: auto"><code class="language-python">s.remove(2)     # Raises error if not found
+s.discard(3)    # No error if not found
+s.pop()         # Removes arbitrary element
+s.clear()       # Empties the set</code></pre>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">10. Membership Testing</h2>
+          <pre style="margin: auto"><code class="language-python">if 2 in s:
+    print("Found")</code></pre>
+          <ul>
+            <li>Hash-based lookup is extremely efficient</li>
+            <li>Typically faster than list membership tests</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">11. Set Operations Overview</h2>
+          <br />
+          <p>Sets support mathematical operations:</p>
+          <ul>
+            <li>Union</li>
+            <li>Intersection</li>
+            <li>Difference</li>
+            <li>Symmetric Difference</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">12. Union</h2>
+          <pre style="margin: auto"><code class="language-python">a = {1, 2, 3}
+b = {3, 4, 5}
+
+a | b
+a.union(b)
+
+# {1, 2, 3, 4, 5}</code></pre>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">13. Intersection</h2>
+          <pre style="margin: auto"><code class="language-python">a &amp; b
+a.intersection(b)
+
+# {3}</code></pre>
+          <p class="text-center">Elements common to both sets.</p>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">14. Difference</h2>
+          <pre style="margin: auto"><code class="language-python">a - b
+a.difference(b)</code></pre>
+          <p class="text-center">Elements in <code>a</code> but not in <code>b</code>.</p>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">15. Symmetric Difference</h2>
+          <pre style="margin: auto"><code class="language-python">a ^ b
+a.symmetric_difference(b)</code></pre>
+          <p class="text-center">Elements in either set, but not both.</p>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">16. Subset and Superset</h2>
+          <pre style="margin: auto"><code class="language-python">a = {1, 2}
+b = {1, 2, 3}
+
+a.issubset(b)
+b.issuperset(a)
+
+a &lt;= b
+b &gt;= a</code></pre>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">17. Frozen Sets</h2>
+          <pre style="margin: auto"><code class="language-python">fs = frozenset([1, 2, 3])</code></pre>
+          <ul>
+            <li>Immutable version of a set</li>
+            <li>Can be used as dictionary keys</li>
+            <li>Cannot add or remove elements</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">18. Set Comprehensions</h2>
+          <pre style="margin: auto"><code class="language-python">squares = {x**2 for x in range(5)}</code></pre>
+          <ul>
+            <li>Similar to list comprehensions</li>
+            <li>Produces a set directly</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">19. Performance Considerations</h2>
+          <ul>
+            <li>Membership test: <strong>O(1)</strong> average</li>
+            <li>Union/intersection: approximately <strong>O(len(s) + len(t))</strong></li>
+            <li>Implemented with hash tables</li>
+            <li>Not suitable when order matters</li>
+          </ul>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">20. Practical Use Cases</h2>
+          <ul>
+            <li>Removing duplicates</li>
+            <li>Finding common elements between datasets</li>
+            <li>Tracking unique visitors</li>
+            <li>Graph algorithms (visited nodes)</li>
+            <li>Access control lists and permissions</li>
+          </ul>
+          <br />
+          <h3 class="text-center">Questions?</h3>
+        </section>
+
+        <section>
+          <br />
+          <h2 class="text-center">Bonus Practice Game (Existing)</h2>
           <h3 class="text-center">Using a tuple, translate this to Python:</h3>
           <div class="text-center">
             <span>"</span>
@@ -314,78 +512,6 @@
               aria-live="polite"
             ></p>
           </div>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Creating Tuples</h2>
-          <h4 class="text-center">Basic Syntax</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (10, 20, 30)</code></pre>
-          <br />
-          <h4 class="text-center">Tuple Packing</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = 10, 20, 30</code></pre>
-          <br />
-          <h4 class="text-center">Single-Element Tuple</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">single = (5,)   # Comma is required!</code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple != Parentheses</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-a = (1, 2, 3)
-b = 1, 2, 3
-
-print(type(a))  # tuple
-print(type(b))  # tuple
-  </code></pre>
-          <br />
-          <p class="text-center">
-            <strong>The comma</strong>, not the parentheses, creates a tuple.
-          </p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Parentheses for Clarity</h2>
-          <p class="text-center">
-            Parentheses are optional, but they are recommended for:
-          </p>
-          <ul>
-            <li>Readability</li>
-            <li>Preventing ambiguity</li>
-            <li>Multi-line formatting</li>
-          </ul>
-          <br /><br />
-          <pre style="margin: auto"><code class="language-python">
-coordinates = (
-    40.7128,
-    -74.0060
-)
-  </code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Single-Element Tuple Rule</h2>
-          <p class="text-center">Common mistake:</p>
-          <pre style="margin: auto"><code class="language-python">
-single = (5)
-print(type(single))  # int
-  </code></pre>
-
-          <p class="text-center">Correct:</p>
-          <pre style="margin: auto"><code class="language-python">
-single = (5,)
-print(type(single))  # tuple
-  </code></pre>
         </section>
 
         <section>
@@ -444,21 +570,6 @@ print(type(single))  # tuple
 
         <section>
           <br />
-          <h2 class="text-center">Empty Tuples</h2>
-          <p class="text-center">Correct syntax:</p>
-
-          <pre style="margin: auto"><code class="language-python">
-empty = ()
-  </code></pre>
-          <br />
-          <p class="text-center">Invalid syntax:</p>
-          <pre style="margin: auto"><code class="language-python">
-empty = ,   # SyntaxError
-  </code></pre>
-        </section>
-
-        <section>
-          <br />
           <h3 class="text-center">Using an empty tuple, translate:</h3>
           <div class="text-center">
             <span>"</span>
@@ -509,95 +620,6 @@ empty = ,   # SyntaxError
               aria-live="polite"
             ></p>
           </div>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple Creation from Iterables</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-numbers = tuple([1, 2, 3])
-letters = tuple("abc")
-
-print(numbers)  # (1, 2, 3)
-print(letters)  # ('a', 'b', 'c')
-  </code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">List and Tuple Conversion</h2>
-          <br />
-          <h4 class="text-center">Tuple → List</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (1, 2, 3)
-numbers_list = list(numbers)</code></pre>
-          <br />
-          <h4 class="text-center">List → Tuple</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers_tuple = tuple(numbers_list)</code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Trailing Commas</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-values = (1, 2, 3,)
-  </code></pre>
-          <br />
-          <ul>
-            <li>Easier element additions</li>
-            <li>Valid and recommended in long tuples</li>
-          </ul>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Nested Tuple Creation</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-data = (
-    ("Alice", 25),
-    ("Bob", 30),
-    ("Charlie", 35)
-)
-  </code></pre>
-          <br />
-          <p class="text-center">Useful for structured immutable records.</p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Packing & Returns</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-def get_user():
-    return "Alice", 25
-
-result = get_user()
-print(result)  # ('Alice', 25)
-  </code></pre>
-          <br />
-          <p class="text-center">
-            Python automatically packs return values into a tuple.
-          </p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple Creation with Generators</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">
-squares = tuple(x**2 for x in range(5))
-print(squares)  # (0, 1, 4, 9, 16)
-  </code></pre>
-          <br />
-          <p class="text-center">
-            The generator expression is consumed by <code>tuple()</code>.
-          </p>
         </section>
 
         <section>
@@ -656,39 +678,6 @@ print(squares)  # (0, 1, 4, 9, 16)
 
         <section>
           <br />
-          <h2 class="text-center">Accessing Tuple Elements</h2>
-          <br />
-          <pre
-            style="margin: auto"
-          ><code class="language-python">colors = ("red", "green", "blue")
-
-print(colors[0])  # red
-print(colors[-1]) # blue</code></pre>
-          <br />
-          <p class="text-center">Indexing starts at <strong>0</strong>.</p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple Slicing</h2>
-          <br />
-          <pre
-            style="margin: auto"
-          ><code class="language-python">numbers = (10, 20, 30, 40, 50)
-
-print(numbers[1:4])  # (20, 30, 40)</code></pre>
-
-          <br />
-
-          <p class="text-center">Format:</p>
-
-          <pre
-            style="margin: auto"
-          ><code class="language-python">tuple[start:end]</code></pre>
-        </section>
-
-        <section>
-          <br />
           <h3 class="text-center">Using tuple slicing, translate:</h3>
           <div class="text-center">
             <span>"</span>
@@ -739,55 +728,6 @@ print(numbers[1:4])  # (20, 30, 40)</code></pre>
               aria-live="polite"
             ></p>
           </div>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuple Packing &amp; Unpacking</h2>
-          <h4 class="text-center">Packing</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">person = ("Alice", 25, "Engineer")</code></pre>
-          <br />
-          <h4 class="text-center">Unpacking</h4>
-          <pre
-            style="margin: auto"
-          ><code class="language-python">name, age, job = person</code></pre>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Tuples as Dictionary Keys</h2>
-          <br />
-          <pre style="margin: auto"><code class="language-python">locations = {
-    (40.7128, -74.0060): "New York",
-    (34.0522, -118.2437): "Los Angeles"
-}</code></pre>
-          <br />
-          <p class="text-center">Lists cannot be used as keys, <b>but tuples can be.</b></p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">When To Use Which</h2>
-          <br />
-          <p class="text-center">
-            Use a <strong>tuple</strong> for fixed data.
-          </p>
-          <p class="text-center">
-            Use a <strong>list</strong> for changing data.
-          </p>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">Class Practice</h2>
-          <br />
-          <ol>
-            <li>Create a tuple with 5 values.</li>
-            <li>Unpack it into variables.</li>
-            <li>Slice the middle 3 elements.</li>
-          </ol>
         </section>
       </div>
     </div>
