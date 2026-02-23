@@ -1,250 +1,258 @@
-# Lesson IV
-## Python Tuples
-### Immutable Ordered Collections
-
-Jerome Loria — February 2026
+# Python Sets
+### A Complete Lesson (20 Slides)
 
 ---
 
-## What is a Tuple?
+## 1. Introduction to Python Sets
 
-- An ordered collection
-- Allows duplicate values
-- Can store mixed data types
-- Immutable (cannot be changed after creation)
-
----
-
-Tuples look like this:
-
-```python
-my_tuple = (1, 2, 3)
-```
+- Sets are **unordered**, mutable collections of **unique elements**
+- Defined using `{}` or the `set()` constructor
+- Built-in Python data type
+- Ideal for membership testing and removing duplicates
 
 ---
 
-## Creating Tuples
+## 2. Why Use Sets?
 
-#### Basic Syntax
-```python
-numbers = (10, 20, 30)
-```
-
-#### Tuple Packing
-```python
-numbers = 10, 20, 30
-```
-
-#### Single-Element Tuple
-```python
-single = (5,)   # Comma is required!
-```
+- Automatically remove duplicate values
+- Fast membership testing (average **O(1)**)
+- Support mathematical set operations
+- Useful in data cleaning and filtering
 
 ---
 
-## Tuple != Parentheses
+## 3. Creating Sets
 
 ```python
-a = (1, 2, 3)
-b = 1, 2, 3
+# Using curly braces
+s1 = {1, 2, 3}
 
-print(type(a))  # tuple
-print(type(b))  # tuple
+# Using set() constructor
+s2 = set([1, 2, 3])
+
+# Empty set (correct way)
+empty = set()
 ```
 
-**The comma**, not the parentheses, creates a tuple.
+> `{}` creates an empty dictionary, not a set.
 
 ---
 
-## Parentheses for Clarity
+## 4. Set Characteristics
 
-Parentheses are optional, but they are recommended for:
+* Unordered (no indexing)
+* Mutable (can add/remove elements)
+* No duplicate elements
+* Elements must be **hashable**
 
-- Readability
-- Preventing ambiguity
-- Multi-line formatting
+---
+
+## 5. Valid Set Elements
+
+**Allowed:**
+
+* `int`, `float`, `str`
+* `tuple` (if immutable)
+
+**Not allowed:**
+
+* `list`, `dict`, `set`
 
 ```python
-coordinates = (
-    40.7128,
-    -74.0060
-)
+valid = {1, "hello", (1, 2)}
 ```
 
 ---
 
-## Single-Element Tuple Rule
+## 6. Removing Duplicates Example
 
-Common mistake:
 ```python
-single = (5)
-print(type(single))  # int
+numbers = [1, 2, 2, 3, 4, 4]
+unique_numbers = set(numbers)
+print(unique_numbers)
 ```
 
-Correct:
+* Converts list to unique elements
+* Order is not preserved
+
+---
+
+## 7. Adding Elements
+
 ```python
-single = (5,)
-print(type(single))  # tuple
+s = {1, 2, 3}
+s.add(4)
+```
+
+* `add()` inserts one element
+* No effect if element already exists
+
+---
+
+## 8. Updating Sets
+
+```python
+s = {1, 2}
+s.update([3, 4])
+```
+
+* `update()` adds multiple elements
+* Accepts any iterable
+
+---
+
+## 9. Removing Elements
+
+```python
+s.remove(2)     # Raises error if not found
+s.discard(3)    # No error if not found
+s.pop()         # Removes arbitrary element
+s.clear()       # Empties the set
 ```
 
 ---
 
-## Empty Tuples
+## 10. Membership Testing
 
-Correct syntax:
 ```python
-empty = ()
+if 2 in s:
+    print("Found")
 ```
 
-Invalid syntax:
+* Extremely efficient (hash-based lookup)
+* Faster than list membership testing
+
+---
+
+## 11. Set Operations Overview
+
+Sets support mathematical operations:
+
+* Union
+* Intersection
+* Difference
+* Symmetric Difference
+
+---
+
+## 12. Union
+
 ```python
-empty = ,   # SyntaxError
+a = {1, 2, 3}
+b = {3, 4, 5}
+
+a | b
+a.union(b)
+```
+
+Result:
+
+```python
+{1, 2, 3, 4, 5}
 ```
 
 ---
 
-## Tuple Creation from Iterables
+## 13. Intersection
 
 ```python
-numbers = tuple([1, 2, 3])
-letters = tuple("abc")
+a & b
+a.intersection(b)
+```
 
-print(numbers)  # (1, 2, 3)
-print(letters)  # ('a', 'b', 'c')
+Result:
+
+```python
+{3}
+```
+
+* Elements common to both sets
+
+---
+
+## 14. Difference
+
+```python
+a - b
+a.difference(b)
+```
+
+* Elements in `a` but not in `b`
+
+---
+
+## 15. Symmetric Difference
+
+```python
+a ^ b
+a.symmetric_difference(b)
+```
+
+* Elements in either set, but not both
+
+---
+
+## 16. Subset and Superset
+
+```python
+a = {1, 2}
+b = {1, 2, 3}
+
+a.issubset(b)
+b.issuperset(a)
+```
+
+Operators:
+
+```python
+a <= b
+b >= a
 ```
 
 ---
 
-## List and Tuple Conversion
+## 17. Frozen Sets
 
-#### Tuple → List
+* Immutable version of a set
+* Created with `frozenset()`
+
 ```python
-numbers = (1, 2, 3)
-numbers_list = list(numbers)
+fs = frozenset([1, 2, 3])
 ```
 
-#### List → Tuple
-```python
-numbers_tuple = tuple(numbers_list)
-```
+* Can be used as dictionary keys
+* Cannot add/remove elements
 
 ---
 
-## Trailing Commas
+## 18. Set Comprehensions
 
 ```python
-values = (1, 2, 3,)
+squares = {x**2 for x in range(5)}
 ```
 
-- Easier element additions
-- Valid and recommended in long tuples
+* Similar to list comprehensions
+* Produces a set
 
 ---
 
-## Nested Tuple Creation
+## 19. Performance Considerations
 
-```python
-data = (
-    ("Alice", 25),
-    ("Bob", 30),
-    ("Charlie", 35)
-)
-```
-
-Useful for structured immutable records.
+* Membership test: **O(1)** average
+* Union/intersection: **O(len(s) + len(t))**
+* Implemented using hash tables
+* Not suitable when order matters
 
 ---
 
-## Packing & Returns
+## 20. Practical Use Cases
 
-```python
-def get_user():
-    return "Alice", 25
-
-result = get_user()
-print(result)  # ('Alice', 25)
-```
-
-Python automatically packs return values into a tuple.
+* Removing duplicates
+* Finding common elements between datasets
+* Tracking unique visitors
+* Graph algorithms (visited nodes)
+* Access control lists and permissions
 
 ---
 
-## Tuple Creation with Generators
-
-```python
-squares = tuple(x**2 for x in range(5))
-print(squares)  # (0, 1, 4, 9, 16)
-```
-
-The generator expression is consumed by `tuple()`.
-
----
-
-## Accessing Tuple Elements
-
-```python
-colors = ("red", "green", "blue")
-
-print(colors[0])  # red
-print(colors[-1]) # blue
-```
-
-Indexing starts at **0**.
-
----
-
-## Tuple Slicing
-
-```python
-numbers = (10, 20, 30, 40, 50)
-
-print(numbers[1:4])  # (20, 30, 40)
-```
-
-Format:
-```python
-tuple[start:end]
-```
-
----
-
-## Tuple Packing & Unpacking
-
-#### Packing
-```python
-person = ("Alice", 25, "Engineer")
-```
-
-#### Unpacking
-```python
-name, age, job = person
-```
-
----
-
-## Tuples as Dictionary Keys
-
-```python
-locations = {
-    (40.7128, -74.0060): "New York",
-    (34.0522, -118.2437): "Los Angeles"
-}
-```
-
-Lists cannot be used as keys, **but tuples can be.**
-
----
-
-## When To Use Which
-
-Use a **tuple** for fixed data.
-
-Use a **list** for changing data.
-
----
-
-## Class Practice
-
-1. Create a tuple with 5 values.
-2. Unpack it into variables.
-3. Slice the middle 3 elements.
+# Questions?
