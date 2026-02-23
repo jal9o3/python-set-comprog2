@@ -407,6 +407,62 @@ s.update([3, 4])</code></pre>
 
         <section>
           <br />
+          <h3 class="text-center">Using the update method</code>, translate:</h3>
+
+          <div class="text-center">
+            <span>"</span>
+            <span
+              style="font-style: italic"
+              class="english-update-sentence"
+            ></span>
+            <span>"</span>
+          </div>
+
+          <div class="tuple-game" id="set-update-game">
+            <div class="game-progress">
+              <span id="set-update-round">Round 1 of 3</span>
+              <span id="set-update-score">Score: 0</span>
+            </div>
+
+            <div
+              id="set-update-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="set-update-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button
+                id="set-update-check"
+                class="game-btn primary"
+                type="button"
+              >
+                Check
+              </button>
+              <button
+                id="set-update-clear"
+                class="game-btn secondary"
+                type="button"
+              >
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="set-update-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Removing Elements</h2>
           <br />
           <pre
@@ -1117,6 +1173,213 @@ b &gt;= a</code></pre>
       });
 
       renderSetBuilderRound();
+    </script>
+
+    <script>
+      const setUpdateRounds = [
+        {
+          prompt: "Boats C and A are also in the port.",
+          target: ["boats_in_port.update(", '["Boat C",', '"Boat A"]', ")"],
+          tokens: [
+            "boats_in_port.update(",
+            '["Boat C",',
+            '"Boat A"]',
+            ")",
+            "boats_in_port.add(",
+            '["Boat A",',
+          ],
+        },
+        {
+          prompt: "Plate numbers LMN456 and ABC123 were also stolen.",
+          target: [
+            "stolen_plates.update(",
+            '["LMN456",',
+            '"ABC123"]',
+            ")",
+          ],
+          tokens: [
+            "stolen_plates.update(",
+            '["LMN456",',
+            '"ABC123"]',
+            ")",
+            "stolen_plates.add(",
+            '["ABC123",',
+          ],
+        },
+        {
+          prompt: "Van Gogh and Monet are artists as well.",
+          target: ["artists.update(", '["Van Gogh",', '"Monet"]', ")"],
+          tokens: [
+            "artists.update(",
+            '["Van Gogh",',
+            '"Monet"]',
+            ")",
+            "artists.add(",
+            '["Monet",',
+          ],
+        },
+      ];
+
+      const setUpdateBank = document.getElementById("set-update-bank");
+      const setUpdateAnswer = document.getElementById("set-update-answer");
+      const setUpdateSentence = document.querySelector(".english-update-sentence");
+      const setUpdateRoundText = document.getElementById("set-update-round");
+      const setUpdateScoreText = document.getElementById("set-update-score");
+      const setUpdateFeedback = document.getElementById("set-update-feedback");
+      const setUpdateCheckBtn = document.getElementById("set-update-check");
+      const setUpdateClearBtn = document.getElementById("set-update-clear");
+
+      let setUpdateRoundIndex = 0;
+      let setUpdateScore = 0;
+      let setUpdateSelectedIndexes = [];
+
+      const makeSetUpdateTokenButton = (text, index) => {
+        const token = document.createElement("button");
+        token.type = "button";
+        token.className = "token";
+        token.textContent = text;
+        token.dataset.index = String(index);
+        return token;
+      };
+
+      const getSetUpdateShuffledIndexes = (length) => {
+        const indexes = Array.from({ length }, (_, index) => index);
+        for (let index = indexes.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [indexes[index], indexes[randomIndex]] = [
+            indexes[randomIndex],
+            indexes[index],
+          ];
+        }
+        return indexes;
+      };
+
+      const updateSetUpdateHeader = () => {
+        setUpdateRoundText.textContent = `Round ${setUpdateRoundIndex + 1} of ${setUpdateRounds.length}`;
+        setUpdateScoreText.textContent = `Score: ${setUpdateScore}`;
+      };
+
+      const updateSetUpdateAnswerPlaceholder = () => {
+        setUpdateAnswer.classList.toggle(
+          "empty",
+          setUpdateSelectedIndexes.length === 0,
+        );
+      };
+
+      const setSetUpdateFeedback = (message, tone = "") => {
+        setUpdateFeedback.textContent = message;
+        setUpdateFeedback.classList.remove("success", "error");
+        if (tone) {
+          setUpdateFeedback.classList.add(tone);
+        }
+      };
+
+      const syncSetUpdateBankState = () => {
+        const active = new Set(setUpdateSelectedIndexes);
+        setUpdateBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderSetUpdateAnswer = () => {
+        const round = setUpdateRounds[setUpdateRoundIndex];
+        setUpdateAnswer.innerHTML = "";
+
+        setUpdateSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeSetUpdateTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            setUpdateSelectedIndexes.splice(answerIndex, 1);
+            renderSetUpdateAnswer();
+            syncSetUpdateBankState();
+            updateSetUpdateAnswerPlaceholder();
+          });
+          setUpdateAnswer.appendChild(token);
+        });
+
+        updateSetUpdateAnswerPlaceholder();
+      };
+
+      const renderSetUpdateRound = () => {
+        const round = setUpdateRounds[setUpdateRoundIndex];
+        setUpdateSelectedIndexes = [];
+        setUpdateBank.innerHTML = "";
+        setUpdateAnswer.innerHTML = "";
+
+        if (setUpdateSentence) {
+          setUpdateSentence.textContent = round.prompt;
+        }
+
+        setSetUpdateFeedback("");
+
+        const shuffledIndexes = getSetUpdateShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const token = makeSetUpdateTokenButton(round.tokens[index], index);
+          token.addEventListener("click", () => {
+            setUpdateSelectedIndexes.push(index);
+            renderSetUpdateAnswer();
+            syncSetUpdateBankState();
+          });
+          setUpdateBank.appendChild(token);
+        });
+
+        updateSetUpdateHeader();
+        syncSetUpdateBankState();
+        updateSetUpdateAnswerPlaceholder();
+      };
+
+      const goToNextSetUpdateRound = () => {
+        if (setUpdateRoundIndex < setUpdateRounds.length - 1) {
+          setUpdateRoundIndex += 1;
+          renderSetUpdateRound();
+          return;
+        }
+
+        setSetUpdateFeedback(
+          `Challenge complete! Final score: ${setUpdateScore}/${setUpdateRounds.length}`,
+          "success",
+        );
+        setUpdateCheckBtn.disabled = true;
+      };
+
+      setUpdateCheckBtn.addEventListener("click", () => {
+        const round = setUpdateRounds[setUpdateRoundIndex];
+        const answerTokens = setUpdateSelectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          setUpdateScore += 1;
+          updateSetUpdateHeader();
+          setSetUpdateFeedback("Perfect! Correct set.update(arg) usage.", "success");
+          launchConfetti();
+          setTimeout(goToNextSetUpdateRound, 750);
+          return;
+        }
+
+        setSetUpdateFeedback(
+          "Not quite. Recheck your update syntax and try again.",
+          "error",
+        );
+      });
+
+      setUpdateClearBtn.addEventListener("click", () => {
+        setUpdateSelectedIndexes = [];
+        renderSetUpdateAnswer();
+        syncSetUpdateBankState();
+        setSetUpdateFeedback("Answer cleared.");
+      });
+
+      renderSetUpdateRound();
     </script>
 
     <script>
