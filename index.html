@@ -239,7 +239,7 @@
         <section>
           <div class="text-center">
             <br />
-            <h3>Lesson IV</h3>
+            <h3>Lesson V</h3>
             <h1>Python Sets</h1>
             <h3>Unique Unordered Collections</h3>
             <br />
@@ -250,11 +250,11 @@
 
         <section>
           <br />
-          <h2 class="text-center">1. Introduction to Python Sets</h2>
+          <h2 class="text-center">What are Sets?</h2>
           <br />
           <ul>
-            <li>Sets are unordered, mutable collections of unique elements</li>
-            <li>Defined with <code>{}</code> or <code>set()</code></li>
+            <li>Unordered, mutable collections of unique elements</li>
+            <li>Defined with <code>set()</code></li>
             <li>Built-in Python data type</li>
             <li>Great for membership testing and deduplication</li>
           </ul>
@@ -262,20 +262,11 @@
 
         <section>
           <br />
-          <h2 class="text-center">2. Why Use Sets?</h2>
+          <h2 class="text-center">Creating Sets</h2>
           <br />
-          <ul>
-            <li>Automatically remove duplicate values</li>
-            <li>Fast membership tests (average <strong>O(1)</strong>)</li>
-            <li>Support mathematical set operations</li>
-            <li>Useful for data cleaning and filtering</li>
-          </ul>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">3. Creating Sets</h2>
-          <pre style="margin: auto"><code class="language-python"># Using curly braces
+          <pre
+            style="margin: auto"
+          ><code class="language-python"># Using curly braces
 s1 = {1, 2, 3}
 
 # Using set() constructor
@@ -283,35 +274,52 @@ s2 = set([1, 2, 3])
 
 # Empty set (correct way)
 empty = set()</code></pre>
-          <p class="text-center"><code>{}</code> creates an empty dictionary, not a set.</p>
+          <p class="text-center">
+            <code>{}</code> creates an empty dictionary, not a set.
+          </p>
         </section>
 
         <section>
           <br />
-          <h2 class="text-center">4. Set Characteristics</h2>
+          <h2 class="text-center">Set Characteristics</h2>
           <br />
           <ul>
             <li>Unordered (no indexing)</li>
             <li>Mutable (can add/remove elements)</li>
             <li>No duplicate elements</li>
-            <li>Elements must be hashable</li>
           </ul>
         </section>
 
         <section>
           <br />
-          <h2 class="text-center">5. Valid Set Elements</h2>
-          <p><strong>Allowed:</strong> <code>int</code>, <code>float</code>, <code>str</code>, immutable <code>tuple</code></p>
-          <p><strong>Not allowed:</strong> <code>list</code>, <code>dict</code>, <code>set</code></p>
-          <pre style="margin: auto"><code class="language-python">valid = {1, "hello", (1, 2)}</code></pre>
+          <h2 class="text-center">Valid Set Elements</h2>
+          <br />
+          <p>
+            <strong>Allowed:</strong> <code>int</code>, <code>float</code>,
+            <code>str</code>, <code>tuple</code>
+          </p>
+          <p>
+            <strong>Not allowed:</strong> <code>list</code>, <code>dict</code>,
+            <code>set</code>
+          </p>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">valid = {1, "hello", (1, 2)}</code></pre>
         </section>
 
         <section>
           <br />
-          <h2 class="text-center">6. Removing Duplicates</h2>
-          <pre style="margin: auto"><code class="language-python">numbers = [1, 2, 2, 3, 4, 4]
+          <h2 class="text-center">Removing Duplicates</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">numbers = [1, 2, 2, 3, 4, 4]
 unique_numbers = set(numbers)
 print(unique_numbers)</code></pre>
+
+          <br />
+
           <ul>
             <li>Converts a list into unique elements</li>
             <li>Order is not preserved</li>
@@ -320,9 +328,11 @@ print(unique_numbers)</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">7. Adding Elements</h2>
+          <h2 class="text-center">Adding Elements</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">s = {1, 2, 3}
 s.add(4)</code></pre>
+          <br />
           <ul>
             <li><code>add()</code> inserts one element</li>
             <li>No effect if the element already exists</li>
@@ -331,9 +341,11 @@ s.add(4)</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">8. Updating Sets</h2>
+          <h2 class="text-center">Updating Sets</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">s = {1, 2}
 s.update([3, 4])</code></pre>
+          <br />
           <ul>
             <li><code>update()</code> adds multiple elements</li>
             <li>Accepts any iterable</li>
@@ -342,8 +354,11 @@ s.update([3, 4])</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">9. Removing Elements</h2>
-          <pre style="margin: auto"><code class="language-python">s.remove(2)     # Raises error if not found
+          <h2 class="text-center">Removing Elements</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">s.remove(2)     # Raises error if not found
 s.discard(3)    # No error if not found
 s.pop()         # Removes arbitrary element
 s.clear()       # Empties the set</code></pre>
@@ -351,18 +366,16 @@ s.clear()       # Empties the set</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">10. Membership Testing</h2>
+          <h2 class="text-center">Membership Testing</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">if 2 in s:
     print("Found")</code></pre>
-          <ul>
-            <li>Hash-based lookup is extremely efficient</li>
-            <li>Typically faster than list membership tests</li>
-          </ul>
+          <ul></ul>
         </section>
 
         <section>
           <br />
-          <h2 class="text-center">11. Set Operations Overview</h2>
+          <h2 class="text-center">Set Operations Overview</h2>
           <br />
           <p>Sets support mathematical operations:</p>
           <ul>
@@ -375,7 +388,8 @@ s.clear()       # Empties the set</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">12. Union</h2>
+          <h2 class="text-center">Union</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">a = {1, 2, 3}
 b = {3, 4, 5}
 
@@ -387,7 +401,8 @@ a.union(b)
 
         <section>
           <br />
-          <h2 class="text-center">13. Intersection</h2>
+          <h2 class="text-center">Intersection</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">a &amp; b
 a.intersection(b)
 
@@ -397,15 +412,19 @@ a.intersection(b)
 
         <section>
           <br />
-          <h2 class="text-center">14. Difference</h2>
+          <h2 class="text-center">Difference</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">a - b
 a.difference(b)</code></pre>
-          <p class="text-center">Elements in <code>a</code> but not in <code>b</code>.</p>
+          <p class="text-center">
+            Elements in <code>a</code> but not in <code>b</code>.
+          </p>
         </section>
 
         <section>
           <br />
-          <h2 class="text-center">15. Symmetric Difference</h2>
+          <h2 class="text-center">Symmetric Difference</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">a ^ b
 a.symmetric_difference(b)</code></pre>
           <p class="text-center">Elements in either set, but not both.</p>
@@ -413,7 +432,8 @@ a.symmetric_difference(b)</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">16. Subset and Superset</h2>
+          <h2 class="text-center">Subset and Superset</h2>
+          <br />
           <pre style="margin: auto"><code class="language-python">a = {1, 2}
 b = {1, 2, 3}
 
@@ -426,8 +446,12 @@ b &gt;= a</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">17. Frozen Sets</h2>
-          <pre style="margin: auto"><code class="language-python">fs = frozenset([1, 2, 3])</code></pre>
+          <h2 class="text-center">Frozen Sets</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">fs = frozenset([1, 2, 3])</code></pre>
+          <br />
           <ul>
             <li>Immutable version of a set</li>
             <li>Can be used as dictionary keys</li>
@@ -437,8 +461,12 @@ b &gt;= a</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">18. Set Comprehensions</h2>
-          <pre style="margin: auto"><code class="language-python">squares = {x**2 for x in range(5)}</code></pre>
+          <h2 class="text-center">Set Comprehensions</h2>
+          <br />
+          <pre
+            style="margin: auto"
+          ><code class="language-python">squares = {x**2 for x in range(5)}</code></pre>
+          <br />
           <ul>
             <li>Similar to list comprehensions</li>
             <li>Produces a set directly</li>
@@ -447,27 +475,19 @@ b &gt;= a</code></pre>
 
         <section>
           <br />
-          <h2 class="text-center">19. Performance Considerations</h2>
-          <ul>
-            <li>Membership test: <strong>O(1)</strong> average</li>
-            <li>Union/intersection: approximately <strong>O(len(s) + len(t))</strong></li>
-            <li>Implemented with hash tables</li>
-            <li>Not suitable when order matters</li>
-          </ul>
-        </section>
-
-        <section>
-          <br />
-          <h2 class="text-center">20. Practical Use Cases</h2>
+          <h2 class="text-center">Practical Use Cases</h2>
+          <br>
           <ul>
             <li>Removing duplicates</li>
             <li>Finding common elements between datasets</li>
             <li>Tracking unique visitors</li>
-            <li>Graph algorithms (visited nodes)</li>
-            <li>Access control lists and permissions</li>
           </ul>
           <br />
-          <h3 class="text-center">Questions?</h3>
+        </section>
+
+        <section>
+          <br /><br /><br /><br /><br />
+          <h2 class="text-center">Thank You!</h2>
         </section>
 
         <section>
@@ -1564,7 +1584,10 @@ b &gt;= a</code></pre>
           return;
         }
 
-        setSlicingFeedback("Not quite. Recheck your slice and try again.", "error");
+        setSlicingFeedback(
+          "Not quite. Recheck your slice and try again.",
+          "error",
+        );
       });
 
       slicingClearBtn.addEventListener("click", () => {
