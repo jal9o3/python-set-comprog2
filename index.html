@@ -627,6 +627,49 @@ b &gt;= a</code></pre>
 
         <section>
           <br />
+          <h3 class="text-center">Using set comprehensions, translate:</h3>
+
+          <div class="text-center">
+            <span style="font-style: italic" class="english-comp-sentence"></span>
+          </div>
+
+          <div class="tuple-game" id="set-comp-game">
+            <div class="game-progress">
+              <span id="set-comp-round">Round 1 of 3</span>
+              <span id="set-comp-score">Score: 0</span>
+            </div>
+
+            <div
+              id="set-comp-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="set-comp-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button id="set-comp-check" class="game-btn primary" type="button">
+                Check
+              </button>
+              <button id="set-comp-clear" class="game-btn secondary" type="button">
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="set-comp-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Practical Use Cases</h2>
           <br>
           <ul>
@@ -1649,6 +1692,265 @@ b &gt;= a</code></pre>
       });
 
       renderSetOpsRound();
+    </script>
+
+    <script>
+      const setCompRounds = [
+        {
+          prompt: "Keep only scores that are at least 1000.",
+          target: [
+            "high_scores",
+            "=",
+            "{score",
+            "for",
+            "score",
+            "in",
+            "scores",
+            "if",
+            "score",
+            ">=",
+            "1000}",
+          ],
+          tokens: [
+            "high_scores",
+            "=",
+            "{score",
+            "for",
+            "score",
+            "in",
+            "scores",
+            "if",
+            "score",
+            ">=",
+            "1000}"
+          ],
+        },
+        {
+          prompt: "Keep only room areas greater than 300.",
+          target: [
+            "large_rooms",
+            "=",
+            "{area",
+            "for",
+            "area",
+            "in",
+            "areas",
+            "if",
+            "area",
+            ">",
+            "300}",
+          ],
+          tokens: [
+            "large_rooms",
+            "=",
+            "{area",
+            "for",
+            "area",
+            "in",
+            "areas",
+            "if",
+            "area",
+            ">",
+            "300}",
+            "<",
+            ">=",
+            "301}",
+          ],
+        },
+        {
+          prompt: "Keep only floors that are above ground level.",
+          target: [
+            "above_ground",
+            "=",
+            "{floor",
+            "for",
+            "floor",
+            "in",
+            "floors",
+            "if",
+            "floor",
+            ">",
+            "0}",
+          ],
+          tokens: [
+            "above_ground",
+            "=",
+            "{floor",
+            "for",
+            "floor",
+            "in",
+            "floors",
+            "if",
+            "floor",
+            ">",
+            "0}",
+            "<",
+            "<=",
+            "0}",
+          ],
+        },
+      ];
+
+      const setCompBank = document.getElementById("set-comp-bank");
+      const setCompAnswer = document.getElementById("set-comp-answer");
+      const setCompSentence = document.querySelector(".english-comp-sentence");
+      const setCompRoundText = document.getElementById("set-comp-round");
+      const setCompScoreText = document.getElementById("set-comp-score");
+      const setCompFeedback = document.getElementById("set-comp-feedback");
+      const setCompCheckBtn = document.getElementById("set-comp-check");
+      const setCompClearBtn = document.getElementById("set-comp-clear");
+
+      let setCompRoundIndex = 0;
+      let setCompScore = 0;
+      let setCompSelectedIndexes = [];
+
+      const makeSetCompTokenButton = (text, index) => {
+        const token = document.createElement("button");
+        token.type = "button";
+        token.className = "token";
+        token.textContent = text;
+        token.dataset.index = String(index);
+        return token;
+      };
+
+      const getSetCompShuffledIndexes = (length) => {
+        const indexes = Array.from({ length }, (_, index) => index);
+        for (let index = indexes.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [indexes[index], indexes[randomIndex]] = [
+            indexes[randomIndex],
+            indexes[index],
+          ];
+        }
+        return indexes;
+      };
+
+      const updateSetCompHeader = () => {
+        setCompRoundText.textContent = `Round ${setCompRoundIndex + 1} of ${setCompRounds.length}`;
+        setCompScoreText.textContent = `Score: ${setCompScore}`;
+      };
+
+      const updateSetCompAnswerPlaceholder = () => {
+        setCompAnswer.classList.toggle("empty", setCompSelectedIndexes.length === 0);
+      };
+
+      const setSetCompFeedback = (message, tone = "") => {
+        setCompFeedback.textContent = message;
+        setCompFeedback.classList.remove("success", "error");
+        if (tone) {
+          setCompFeedback.classList.add(tone);
+        }
+      };
+
+      const syncSetCompBankState = () => {
+        const active = new Set(setCompSelectedIndexes);
+        setCompBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderSetCompAnswer = () => {
+        const round = setCompRounds[setCompRoundIndex];
+        setCompAnswer.innerHTML = "";
+
+        setCompSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeSetCompTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            setCompSelectedIndexes.splice(answerIndex, 1);
+            renderSetCompAnswer();
+            syncSetCompBankState();
+            updateSetCompAnswerPlaceholder();
+          });
+          setCompAnswer.appendChild(token);
+        });
+
+        updateSetCompAnswerPlaceholder();
+      };
+
+      const renderSetCompRound = () => {
+        const round = setCompRounds[setCompRoundIndex];
+        setCompSelectedIndexes = [];
+        setCompBank.innerHTML = "";
+        setCompAnswer.innerHTML = "";
+
+        if (setCompSentence) {
+          setCompSentence.textContent = round.prompt;
+        }
+
+        setSetCompFeedback("");
+
+        const shuffledIndexes = getSetCompShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const token = makeSetCompTokenButton(round.tokens[index], index);
+          token.addEventListener("click", () => {
+            setCompSelectedIndexes.push(index);
+            renderSetCompAnswer();
+            syncSetCompBankState();
+          });
+          setCompBank.appendChild(token);
+        });
+
+        updateSetCompHeader();
+        syncSetCompBankState();
+        updateSetCompAnswerPlaceholder();
+      };
+
+      const goToNextSetCompRound = () => {
+        if (setCompRoundIndex < setCompRounds.length - 1) {
+          setCompRoundIndex += 1;
+          renderSetCompRound();
+          return;
+        }
+
+        setSetCompFeedback(
+          `Challenge complete! Final score: ${setCompScore}/${setCompRounds.length}`,
+          "success",
+        );
+        setCompCheckBtn.disabled = true;
+      };
+
+      setCompCheckBtn.addEventListener("click", () => {
+        const round = setCompRounds[setCompRoundIndex];
+        const answerTokens = setCompSelectedIndexes.map(
+          (index) => round.tokens[index],
+        );
+
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          setCompScore += 1;
+          updateSetCompHeader();
+          setSetCompFeedback(
+            "Great syntax! That set comprehension is correct.",
+            "success",
+          );
+          launchConfetti();
+          setTimeout(goToNextSetCompRound, 750);
+          return;
+        }
+
+        setSetCompFeedback(
+          "Not quite. Check variable names, condition, and braces.",
+          "error",
+        );
+      });
+
+      setCompClearBtn.addEventListener("click", () => {
+        setCompSelectedIndexes = [];
+        renderSetCompAnswer();
+        syncSetCompBankState();
+        setSetCompFeedback("Answer cleared.");
+      });
+
+      renderSetCompRound();
     </script>
 
     <script>
