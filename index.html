@@ -541,6 +541,49 @@ a.symmetric_difference(b)</code></pre>
 
         <section>
           <br />
+          <h3 class="text-center">Use set operations to express:</h3>
+
+          <div class="text-center">
+            <span style="font-style: italic" class="english-ops-sentence"></span>
+          </div>
+
+          <div class="tuple-game" id="set-ops-game">
+            <div class="game-progress">
+              <span id="set-ops-round">Round 1 of 6</span>
+              <span id="set-ops-score">Score: 0</span>
+            </div>
+
+            <div
+              id="set-ops-answer"
+              class="answer-row empty"
+              aria-label="Answer tokens"
+            ></div>
+
+            <div
+              id="set-ops-bank"
+              class="token-bank"
+              aria-label="Available tokens"
+            ></div>
+
+            <div class="game-controls">
+              <button id="set-ops-check" class="game-btn primary" type="button">
+                Check
+              </button>
+              <button id="set-ops-clear" class="game-btn secondary" type="button">
+                Clear
+              </button>
+            </div>
+
+            <p
+              id="set-ops-feedback"
+              class="text-center game-feedback"
+              aria-live="polite"
+            ></p>
+          </div>
+        </section>
+
+        <section>
+          <br />
           <h2 class="text-center">Subset and Superset</h2>
           <br />
           <pre style="margin: auto"><code class="language-python">a = {1, 2}
@@ -1380,6 +1423,232 @@ b &gt;= a</code></pre>
       });
 
       renderSetUpdateRound();
+    </script>
+
+    <script>
+      const setOpsRounds = [
+        {
+          prompt: "Students both in Computer Programming and HCI.",
+          target: [
+            "both_subjects",
+            "=",
+            "comprog_students.intersection(",
+            "hci_students",
+            ")",
+          ],
+          tokens: [
+            "both_subjects",
+            "=",
+            "comprog_students.intersection(",
+            "hci_students",
+            ")",
+            "comprog_students.union(",
+          ],
+        },
+        {
+          prompt: "Non-submitting enrolled students are marked as missing.",
+          target: ["missing", "=", "enrolled.difference(", "submitted", ")"],
+          tokens: [
+            "missing",
+            "=",
+            "enrolled.difference(",
+            "submitted",
+            ")",
+            "enrolled.intersection(",
+            "enrolled.union(",
+          ],
+        },
+        {
+          prompt: "Ideal rooms both have a sea-view and non-smoking.",
+          target: ["ideal_rooms", "=", "sea_view", "&", "non_smoking"],
+          tokens: [
+            "ideal_rooms",
+            "=",
+            "sea_view",
+            "&",
+            "non_smoking",
+            "|",
+            "^",
+          ],
+        },
+        {
+          prompt: "Nurses and physicians are all part of the care team.",
+          target: ["care_team", "=", "nurses", "|", "physicians"],
+          tokens: ["care_team", "=", "nurses", "|", "physicians", "&", "-"],
+        },
+        {
+          prompt: "Handover issues are those not present in both shifts.",
+          target: [
+            "handover_issues",
+            "=",
+            "day_shift_patients",
+            "^",
+            "night_shift_patients",
+          ],
+          tokens: [
+            "handover_issues",
+            "=",
+            "day_shift_patients",
+            "^",
+            "night_shift_patients",
+            "|",
+            "&",
+          ],
+        },
+      ];
+
+      const setOpsBank = document.getElementById("set-ops-bank");
+      const setOpsAnswer = document.getElementById("set-ops-answer");
+      const setOpsSentence = document.querySelector(".english-ops-sentence");
+      const setOpsRoundText = document.getElementById("set-ops-round");
+      const setOpsScoreText = document.getElementById("set-ops-score");
+      const setOpsFeedback = document.getElementById("set-ops-feedback");
+      const setOpsCheckBtn = document.getElementById("set-ops-check");
+      const setOpsClearBtn = document.getElementById("set-ops-clear");
+
+      let setOpsRoundIndex = 0;
+      let setOpsScore = 0;
+      let setOpsSelectedIndexes = [];
+
+      const makeSetOpsTokenButton = (text, index) => {
+        const token = document.createElement("button");
+        token.type = "button";
+        token.className = "token";
+        token.textContent = text;
+        token.dataset.index = String(index);
+        return token;
+      };
+
+      const getSetOpsShuffledIndexes = (length) => {
+        const indexes = Array.from({ length }, (_, index) => index);
+        for (let index = indexes.length - 1; index > 0; index -= 1) {
+          const randomIndex = Math.floor(Math.random() * (index + 1));
+          [indexes[index], indexes[randomIndex]] = [
+            indexes[randomIndex],
+            indexes[index],
+          ];
+        }
+        return indexes;
+      };
+
+      const updateSetOpsHeader = () => {
+        setOpsRoundText.textContent = `Round ${setOpsRoundIndex + 1} of ${setOpsRounds.length}`;
+        setOpsScoreText.textContent = `Score: ${setOpsScore}`;
+      };
+
+      const updateSetOpsAnswerPlaceholder = () => {
+        setOpsAnswer.classList.toggle("empty", setOpsSelectedIndexes.length === 0);
+      };
+
+      const setSetOpsFeedback = (message, tone = "") => {
+        setOpsFeedback.textContent = message;
+        setOpsFeedback.classList.remove("success", "error");
+        if (tone) {
+          setOpsFeedback.classList.add(tone);
+        }
+      };
+
+      const syncSetOpsBankState = () => {
+        const active = new Set(setOpsSelectedIndexes);
+        setOpsBank.querySelectorAll(".token").forEach((tokenEl) => {
+          const index = Number(tokenEl.dataset.index);
+          const used = active.has(index);
+          tokenEl.classList.toggle("used", used);
+          tokenEl.disabled = used;
+        });
+      };
+
+      const renderSetOpsAnswer = () => {
+        const round = setOpsRounds[setOpsRoundIndex];
+        setOpsAnswer.innerHTML = "";
+
+        setOpsSelectedIndexes.forEach((index, answerIndex) => {
+          const token = makeSetOpsTokenButton(round.tokens[index], index);
+          token.classList.add("answer-token");
+          token.title = "Tap to remove";
+          token.addEventListener("click", () => {
+            setOpsSelectedIndexes.splice(answerIndex, 1);
+            renderSetOpsAnswer();
+            syncSetOpsBankState();
+            updateSetOpsAnswerPlaceholder();
+          });
+          setOpsAnswer.appendChild(token);
+        });
+
+        updateSetOpsAnswerPlaceholder();
+      };
+
+      const renderSetOpsRound = () => {
+        const round = setOpsRounds[setOpsRoundIndex];
+        setOpsSelectedIndexes = [];
+        setOpsBank.innerHTML = "";
+        setOpsAnswer.innerHTML = "";
+
+        if (setOpsSentence) {
+          setOpsSentence.textContent = round.prompt;
+        }
+
+        setSetOpsFeedback("");
+
+        const shuffledIndexes = getSetOpsShuffledIndexes(round.tokens.length);
+
+        shuffledIndexes.forEach((index) => {
+          const token = makeSetOpsTokenButton(round.tokens[index], index);
+          token.addEventListener("click", () => {
+            setOpsSelectedIndexes.push(index);
+            renderSetOpsAnswer();
+            syncSetOpsBankState();
+          });
+          setOpsBank.appendChild(token);
+        });
+
+        updateSetOpsHeader();
+        syncSetOpsBankState();
+        updateSetOpsAnswerPlaceholder();
+      };
+
+      const goToNextSetOpsRound = () => {
+        if (setOpsRoundIndex < setOpsRounds.length - 1) {
+          setOpsRoundIndex += 1;
+          renderSetOpsRound();
+          return;
+        }
+
+        setSetOpsFeedback(
+          `Challenge complete! Final score: ${setOpsScore}/${setOpsRounds.length}`,
+          "success",
+        );
+        setOpsCheckBtn.disabled = true;
+      };
+
+      setOpsCheckBtn.addEventListener("click", () => {
+        const round = setOpsRounds[setOpsRoundIndex];
+        const answerTokens = setOpsSelectedIndexes.map((index) => round.tokens[index]);
+
+        const correct =
+          answerTokens.length === round.target.length &&
+          answerTokens.every((token, index) => token === round.target[index]);
+
+        if (correct) {
+          setOpsScore += 1;
+          updateSetOpsHeader();
+          setSetOpsFeedback("Nice! Exact set operation syntax.", "success");
+          launchConfetti();
+          setTimeout(goToNextSetOpsRound, 750);
+          return;
+        }
+
+        setSetOpsFeedback("Not quite. Recheck operators, methods, and order.", "error");
+      });
+
+      setOpsClearBtn.addEventListener("click", () => {
+        setOpsSelectedIndexes = [];
+        renderSetOpsAnswer();
+        syncSetOpsBankState();
+        setSetOpsFeedback("Answer cleared.");
+      });
+
+      renderSetOpsRound();
     </script>
 
     <script>
