@@ -1,27 +1,22 @@
-# Python Sets
-### A Complete Lesson (20 Slides)
+## Lesson V  
+# Python Sets  
+### Unique Unordered Collections  
+
+Jerome Loria  
+February 2026
 
 ---
 
-## 1. Introduction to Python Sets
+## What are Sets?
 
-- Sets are **unordered**, mutable collections of **unique elements**
-- Defined using `{}` or the `set()` constructor
-- Built-in Python data type
-- Ideal for membership testing and removing duplicates
-
----
-
-## 2. Why Use Sets?
-
-- Automatically remove duplicate values
-- Fast membership testing (average **O(1)**)
-- Support mathematical set operations
-- Useful in data cleaning and filtering
+- Unordered, mutable collections of unique elements  
+- Defined with `set()`  
+- Built-in Python data type  
+- Great for membership testing and deduplication  
 
 ---
 
-## 3. Creating Sets
+## Creating Sets
 
 ```python
 # Using curly braces
@@ -34,29 +29,23 @@ s2 = set([1, 2, 3])
 empty = set()
 ```
 
-> `{}` creates an empty dictionary, not a set.
+`{}` creates an empty dictionary, not a set.
 
 ---
 
-## 4. Set Characteristics
+## Set Characteristics
 
 * Unordered (no indexing)
 * Mutable (can add/remove elements)
 * No duplicate elements
-* Elements must be **hashable**
 
 ---
 
-## 5. Valid Set Elements
+## Valid Set Elements
 
-**Allowed:**
+**Allowed:** `int`, `float`, `str`, `tuple`
 
-* `int`, `float`, `str`
-* `tuple` (if immutable)
-
-**Not allowed:**
-
-* `list`, `dict`, `set`
+**Not allowed:** `list`, `dict`, `set`
 
 ```python
 valid = {1, "hello", (1, 2)}
@@ -64,7 +53,7 @@ valid = {1, "hello", (1, 2)}
 
 ---
 
-## 6. Removing Duplicates Example
+## Removing Duplicates
 
 ```python
 numbers = [1, 2, 2, 3, 4, 4]
@@ -72,12 +61,12 @@ unique_numbers = set(numbers)
 print(unique_numbers)
 ```
 
-* Converts list to unique elements
+* Converts a list into unique elements
 * Order is not preserved
 
 ---
 
-## 7. Adding Elements
+## Adding Elements
 
 ```python
 s = {1, 2, 3}
@@ -85,11 +74,11 @@ s.add(4)
 ```
 
 * `add()` inserts one element
-* No effect if element already exists
+* No effect if the element already exists
 
 ---
 
-## 8. Updating Sets
+## Updating Sets
 
 ```python
 s = {1, 2}
@@ -101,7 +90,7 @@ s.update([3, 4])
 
 ---
 
-## 9. Removing Elements
+## Removing Elements
 
 ```python
 s.remove(2)     # Raises error if not found
@@ -112,19 +101,16 @@ s.clear()       # Empties the set
 
 ---
 
-## 10. Membership Testing
+## Membership Testing
 
 ```python
 if 2 in s:
     print("Found")
 ```
 
-* Extremely efficient (hash-based lookup)
-* Faster than list membership testing
-
 ---
 
-## 11. Set Operations Overview
+## Set Operations Overview
 
 Sets support mathematical operations:
 
@@ -135,7 +121,7 @@ Sets support mathematical operations:
 
 ---
 
-## 12. Union
+## Union
 
 ```python
 a = {1, 2, 3}
@@ -143,56 +129,48 @@ b = {3, 4, 5}
 
 a | b
 a.union(b)
-```
 
-Result:
-
-```python
-{1, 2, 3, 4, 5}
+# {1, 2, 3, 4, 5}
 ```
 
 ---
 
-## 13. Intersection
+## Intersection
 
 ```python
 a & b
 a.intersection(b)
+
+# {3}
 ```
 
-Result:
-
-```python
-{3}
-```
-
-* Elements common to both sets
+Elements common to both sets.
 
 ---
 
-## 14. Difference
+## Difference
 
 ```python
 a - b
 a.difference(b)
 ```
 
-* Elements in `a` but not in `b`
+Elements in `a` but not in `b`.
 
 ---
 
-## 15. Symmetric Difference
+## Symmetric Difference
 
 ```python
 a ^ b
 a.symmetric_difference(b)
 ```
 
-* Elements in either set, but not both
+Elements in either set, but not both.
 
 ---
 
-## 16. Subset and Superset
+## Subset and Superset
 
 ```python
 a = {1, 2}
@@ -200,59 +178,38 @@ b = {1, 2, 3}
 
 a.issubset(b)
 b.issuperset(a)
-```
 
-Operators:
-
-```python
 a <= b
 b >= a
 ```
 
 ---
 
-## 17. Frozen Sets
-
-* Immutable version of a set
-* Created with `frozenset()`
+## Frozen Sets
 
 ```python
 fs = frozenset([1, 2, 3])
 ```
 
+* Immutable version of a set
 * Can be used as dictionary keys
-* Cannot add/remove elements
+* Cannot add or remove elements
 
 ---
 
-## 18. Set Comprehensions
+## Set Comprehensions
 
 ```python
 squares = {x**2 for x in range(5)}
 ```
 
 * Similar to list comprehensions
-* Produces a set
+* Produces a set directly
 
 ---
 
-## 19. Performance Considerations
-
-* Membership test: **O(1)** average
-* Union/intersection: **O(len(s) + len(t))**
-* Implemented using hash tables
-* Not suitable when order matters
-
----
-
-## 20. Practical Use Cases
+## Practical Use Cases
 
 * Removing duplicates
 * Finding common elements between datasets
 * Tracking unique visitors
-* Graph algorithms (visited nodes)
-* Access control lists and permissions
-
----
-
-# Questions?
